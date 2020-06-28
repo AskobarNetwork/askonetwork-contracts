@@ -4,7 +4,6 @@ import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Burnable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol";
-import "@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol";
 import "./library/BasisPoints.sol";
 
 
@@ -15,17 +14,28 @@ contract AskoToken is ERC20, ERC20Burnable, StandaloneERC20, Ownable {
     uint constant public BASIS_POINTS = 10000;
     uint constant public TAX_BP = 100; //1%
 
+    bool public isBurning = false;
+
+    function setIsBurning(bool value) public onlyOwner {
+        isBurning = value;
+    }
+
     function findBurnAmount(uint value) public pure returns (uint) {
         return value.mulBP(value);
     }
 
     function transfer(address recipient, uint256 amount) public returns (bool) {
-        _transferWithBurn(Context._msgSender(), recipient, amount);
+
+        isBurning ?
+            _transferWithBurn(msg.sender, recipient, amount) :
+            _transfer(msg.sender, recipient, amount);
         return true;
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public returns (bool) {
-        _transferWithBurn(sender, recipient, amount);
+        isBurning ?
+            _transferWithBurn(msg.sender, recipient, amount) :
+            _transfer(msg.sender, recipient, amount);
         approve
         (
             msg.sender,
