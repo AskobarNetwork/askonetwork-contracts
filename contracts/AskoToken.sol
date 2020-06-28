@@ -28,14 +28,13 @@ contract AskoToken is Initializable, ERC20, ERC20Burnable, StandaloneERC20, Owna
         StandaloneERC20.initialize(name, symbol, decimals, minters, pausers);
         taxBP = _taxBP;
         askoStaking = _askoStaking;
-        addTrustedContract(address(askoStaking));
         for (uint256 i = 0; i < minters.length; ++i) {
             addTrustedContract(_trustedContracts[i]);
         }
     }
 
-    function findTaxAmount(uint value) public pure returns (uint) {
-        return value.mulBP(value);
+    function findTaxAmount(uint value) public view returns (uint) {
+        return value.mulBP(taxBP);
     }
 
     function transfer(address recipient, uint256 amount) public returns (bool) {
