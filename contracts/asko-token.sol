@@ -28,7 +28,7 @@ contract AskoToken is ERC20, ERC20Burnable, StandaloneERC20, Ownable {
         _transferWithBurn(sender, recipient, amount);
         approve
         (
-            sender,
+            msg.sender,
             allowance(
                 sender,
                 msg.sender
