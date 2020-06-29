@@ -1,7 +1,9 @@
 pragma solidity 0.5.17;
-import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/StandaloneERC20.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Burnable.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Detailed.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Mintable.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Pausable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol";
 import "@openzeppelin/upgrades/contracts/Initializable.sol";
@@ -9,28 +11,36 @@ import "./library/BasisPoints.sol";
 import "./AskoStaking.sol";
 
 
-contract AskoToken is Initializable, ERC20, ERC20Burnable, StandaloneERC20, Ownable {
+contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable, ERC20Detailed, Ownable {
     using BasisPoints for uint;
     using SafeMath for uint;
 
     uint public taxBP;
     bool public isTaxActive = false;
     AskoStaking private askoStaking;
-    mapping(address => bool) public trustedContracts;
+    mapping(address => bool) private trustedContracts;
 
     function initialize(
         string memory name, string memory symbol, uint8 decimals,
-        address[] memory minters, address[] memory pausers,
-        address[] memory _trustedContracts,
-        uint _taxBP, AskoStaking _askoStaking
+        address owner, uint _taxBP, AskoStaking _askoStaking
     ) public initializer {
         Ownable.initialize(msg.sender);
-        StandaloneERC20.initialize(name, symbol, decimals, minters, pausers);
+
+        ERC20Detailed.initialize(name, symbol, decimals);
+
+        ERC20Mintable.initialize(address(this));
+        _removeMinter(address(this));
+        _addMinter(owner);
+
+        ERC20Pausable.initialize(address(this));
+        _removePauser(address(this));
+        _addPauser(owner);
+
         taxBP = _taxBP;
         askoStaking = _askoStaking;
-        for (uint256 i = 0; i < minters.length; ++i) {
-            addTrustedContract(_trustedContracts[i]);
-        }
+        addTrustedContract(address(_askoStaking));
+        //Due to issue in oz testing suite, the msg.sender might not be owner
+        _transferOwnership(owner);
     }
 
     function findTaxAmount(uint value) public view returns (uint) {
@@ -55,7 +65,7 @@ contract AskoToken is Initializable, ERC20, ERC20Burnable, StandaloneERC20, Owna
             allowance(
                 sender,
                 msg.sender
-            ).sub(amount)
+            ).sub(amount, "Transfer amount exceeds allowance")
         );
         return true;
     }

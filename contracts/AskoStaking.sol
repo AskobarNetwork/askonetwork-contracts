@@ -35,10 +35,13 @@ contract AskoStaking is Initializable, Ownable {
         _;
     }
 
-    function initialize(uint _stakingTaxBP, uint _ustakingTaxBP, IERC20 _askoToken) public initializer {
+    function initialize(uint _stakingTaxBP, uint _ustakingTaxBP, address owner, IERC20 _askoToken) public initializer {
+        Ownable.initialize(msg.sender);
         stakingTaxBP = _stakingTaxBP;
         unStakingTaxBP = _ustakingTaxBP;
         askoToken = _askoToken;
+        //Due to issue in oz testing suite, the msg.sender might not be owner
+        _transferOwnership(owner);
     }
 
     function handleTaxDistribution(uint amount) public onlyAskoToken {
