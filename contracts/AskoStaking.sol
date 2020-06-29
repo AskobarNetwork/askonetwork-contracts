@@ -90,7 +90,7 @@ contract AskoStaking is Initializable, Ownable {
     }
 
     function handleTaxDistribution(uint amount) public onlyAskoToken {
-        totalDistributions = totalDistribution.add(amount);
+        totalDistributions = totalDistributions.add(amount);
         _increaseProfitPerShare(amount);
         emit OnDistribute(amount);
     }

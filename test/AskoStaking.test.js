@@ -9,6 +9,7 @@ const AskoStaking = contract.fromArtifact("AskoStaking")
 const owner = accounts[0]
 const stakers = [accounts[1],accounts[2],accounts[3],accounts[4]]
 const nonStakerAccount = accounts[5]
+const distributionAccount = accounts[6]
 
 describe("AskoStaking", function() {
   before(async function() {
@@ -39,6 +40,7 @@ describe("AskoStaking", function() {
       this.askoToken.mint(stakers[2],ether('10'),{from: owner}),
       this.askoToken.mint(stakers[3],ether('10'),{from: owner}),
       this.askoToken.mint(nonStakerAccount,ether('10'),{from: owner}),
+      this.askoToken.mint(distributionAccount,ether('10'),{from: owner}),
     ])
   })
 
@@ -228,7 +230,7 @@ describe("AskoStaking", function() {
       expect(finalTotalStakers.toString())
         .to.equal(initialTotalStakers.sub(new BN(1)).toString())
     })
-    it("Should increase other stakers dividends by tax/totalStaked * stakeValue", async function (){
+    it("Should increase other stakers dividends by tax/totalStaked * stakeValue", async function() {
       const staker = stakers[1]
       const unstaker = stakers[2]
       const value = ether("1")
@@ -240,6 +242,43 @@ describe("AskoStaking", function() {
       const totalStaked = await this.askoStaking.totalStaked()
       expect(tax.mul(stakerShares).div(totalStaked).toString())
         .to.equal(finalStakerDivis.sub(initialStakerDivis).toString())
+    })
+  })
+
+  describe("#distribution", function(){
+    before(async function() {
+      await Promise.all([
+        this.askoStaking.stake(ether("1"),{from:stakers[0]}),
+        this.askoStaking.stake(ether("1.5"),{from:stakers[1]}),
+        this.askoStaking.stake(ether("1.2"),{from:stakers[2]}),
+        this.askoStaking.stake(ether("9.814231423"),{from:stakers[3]})
+      ])
+    })
+    it("Should revert if distributing more than sender's balance", async function() {
+      const balance = await this.askoToken.balanceOf(distributionAccount)
+      expectRevert(
+        this.askoStaking.distribute(balance.add(new BN(1)),{from: distributionAccount}),
+        "Cannot distribute more ASKO than you hold unstaked."
+      )
+    })
+    it("Should increase totalDistributions by value", async function(){
+      const value = ether("1")
+      const totalDistributionsInitial = await this.askoStaking.totalDistributions()
+      await this.askoStaking.distribute(value,{from: distributionAccount})
+      const totalDistributionsFinal = await this.askoStaking.totalDistributions()
+      expect(totalDistributionsFinal.toString())
+        .to.equal(totalDistributionsInitial.add(value).toString())
+    })
+    it("Should increase other stakers dividends by distribution/totalStaked * stakeValue", async function() {
+      const staker = stakers[3]
+      const value = ether("1")
+      const stakerShares = await this.askoStaking.stakeValue(staker)
+      const initialStakerDivis = await this.askoStaking.dividendsOf(staker)
+      await this.askoStaking.distribute(value,{from:distributionAccount})
+      const finalStakerDivis = await this.askoStaking.dividendsOf(staker)
+      const totalStaked = await this.askoStaking.totalStaked()
+      expect(value.mul(stakerShares).div(totalStaked).toString())
+        .to.equal(finalStakerDivis.sub(initialStakerDivis).sub(new BN(1)).toString())
     })
   })
   //todo: add distribution tests
