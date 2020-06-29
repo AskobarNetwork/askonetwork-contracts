@@ -20,13 +20,13 @@ contract AskoStaking is Initializable, Ownable {
     mapping(address => uint) public stakeValue;
     mapping(address => int) private stakerPayouts;
 
-    uint public totalTaxDistribution;
+    uint public totalDistributions;
     uint public totalStaked;
     uint public totalStakers;
     uint private profitPerShare;
     uint private emptyStakeTokens; //These are tokens given to the contract when there are no stakers.
 
-    event OnTaxDistribute(uint amountSent);
+    event OnDistribute(uint amountSent);
     event OnStake(address sender, uint amount, uint tax);
     event OnUnstake(address sender, uint amount, uint tax);
 
@@ -78,10 +78,21 @@ contract AskoStaking is Initializable, Ownable {
         askoToken.transfer(msg.sender, amount);
     }
 
-    function handleTaxDistribution(uint amount) public onlyAskoToken {
-        totalTaxDistribution = totalTaxDistribution.add(amount);
+    function distribute(uint amount) public {
+        require(askoToken.balanceOf(msg.sender) >= amount, "Cannot distribute more ASKO than you hold unstaked.");
+        totalDistributions = totalDistributions.add(amount);
         _increaseProfitPerShare(amount);
-        emit OnTaxDistribute(amount);
+        require(
+            askoToken.transferFrom(msg.sender, address(this), amount),
+            "Distribution failed due to failed transfer."
+        );
+        emit OnDistribute(amount);
+    }
+
+    function handleTaxDistribution(uint amount) public onlyAskoToken {
+        totalDistributions = totalDistribution.add(amount);
+        _increaseProfitPerShare(amount);
+        emit OnDistribute(amount);
     }
 
     function dividendsOf(address staker) public view returns (int) {

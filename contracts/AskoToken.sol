@@ -25,7 +25,7 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
         address owner, uint _taxBP, AskoStaking _askoStaking
     ) public initializer {
         taxBP = _taxBP;
-        
+
         Ownable.initialize(msg.sender);
 
         ERC20Detailed.initialize(name, symbol, decimals);
