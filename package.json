@@ -3,8 +3,9 @@
     "test": "mocha --exit --recursive --timeout 5000"
   },
   "dependencies": {
-    "@openzeppelin/contracts-ethereum-package": "^2.5.0",
     "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/contracts-ethereum-package": "^2.5.0",
+    "@uniswap/v2-core": "^1.0.1",
     "core-util-is": "^1.0.2"
   },
   "devDependencies": {
