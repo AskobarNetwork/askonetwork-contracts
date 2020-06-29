@@ -24,6 +24,8 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
         string memory name, string memory symbol, uint8 decimals,
         address owner, uint _taxBP, AskoStaking _askoStaking
     ) public initializer {
+        taxBP = _taxBP;
+        
         Ownable.initialize(msg.sender);
 
         ERC20Detailed.initialize(name, symbol, decimals);
@@ -36,7 +38,6 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
         _removePauser(address(this));
         _addPauser(owner);
 
-        taxBP = _taxBP;
         askoStaking = _askoStaking;
         addTrustedContract(address(_askoStaking));
         //Due to issue in oz testing suite, the msg.sender might not be owner

@@ -18,8 +18,8 @@ describe("AskoToken", function() {
     const tokenParams = config.AskoToken
     const stakingParams = config.AskoStaking
 
-    this.askoToken = await AskoToken.new();
-    this.askoStaking = await AskoStaking.new();
+    this.askoToken = await AskoToken.new()
+    this.askoStaking = await AskoStaking.new()
 
     await this.askoToken.initialize(
       tokenParams.name,
