@@ -82,7 +82,7 @@ describe("AskoStaking", function() {
     })
     it("Should decrease stakers balance by value", async function() {
       const staker = stakers[0]
-      const value = ether("1.1")
+      const value = ether("2.1")
       const initialStakersTokens = await this.askoToken.balanceOf(staker)
       await this.askoStaking.stake(value,{from:staker})
       const finalStakersTokens = await this.askoToken.balanceOf(staker)
@@ -92,14 +92,14 @@ describe("AskoStaking", function() {
     it("Should increase totalStakers by 1", async function() {
       const staker = stakers[0]
       const initialTotalStakers = await this.askoStaking.totalStakers()
-      await this.askoStaking.stake(ether("1"),{from:staker})
+      await this.askoStaking.stake(ether("2"),{from:staker})
       const finalTotalStakers = await this.askoStaking.totalStakers()
       expect(finalTotalStakers.toString())
         .to.equal(initialTotalStakers.add(new BN(1)).toString())
     })
     it("Should increase totalStaked by value minus tax", async function() {
       const staker = stakers[0]
-      const value = ether("1.1")
+      const value = ether("2.1")
       const tax = await this.askoStaking.findTaxAmount(value,config.AskoStaking.stakingTaxBP)
       const initialTotalStaked = await this.askoStaking.totalStaked()
       await this.askoStaking.stake(value,{from:staker})
@@ -109,7 +109,7 @@ describe("AskoStaking", function() {
     })
     it("Should increase sender's staked amount by value minus tax", async function() {
       const staker = stakers[0]
-      const value = ether("1.1")
+      const value = ether("2.1")
       const tax = await this.askoStaking.findTaxAmount(value,config.AskoStaking.stakingTaxBP)
       const initialStakerBalance = await this.askoStaking.stakeValue(staker)
       await this.askoStaking.stake(value,{from:staker})
@@ -227,50 +227,23 @@ describe("AskoStaking", function() {
       const finalTotalStakers = await this.askoStaking.totalStakers()
       expect(finalTotalStakers.toString())
         .to.equal(initialTotalStakers.sub(new BN(1)).toString())
-    })/*
-    it("For single staker, dividends+stakeValue[staker] - 1 wei should be contract balance.", async function() {
-      const staker = stakers[0]
-      const balance = await this.askoToken.balanceOf(this.askoStaking.address)
-      const stake = await this.askoStaking.stakeValue(staker)
-      const divis = await this.askoStaking.dividendsOf(staker)
-      expect(stake.add(divis).toString())
-        .to.equal(balance.sub(new BN(1)).toString())
     })
-    it("When second staker doubles total staked, first stakers dividends should increase by half of tax.", async function() {
-      const stakerFirst = stakers[0]
-      const stakerSecond = stakers[1]
+    it("Should increase other stakers dividends by tax/totalStaked * stakeValue", async function (){
+      const staker = stakers[1]
+      const unstaker = stakers[2]
+      const value = ether("1")
+      const tax = await this.askoStaking.findTaxAmount(value,new BN(config.AskoStaking.unstakingTaxBP))
+      const stakerShares = await this.askoStaking.stakeValue(staker)
+      const initialStakerDivis = await this.askoStaking.dividendsOf(staker)
+      await this.askoStaking.unstake(ether("1"),{from:unstaker})
+      const finalStakerDivis = await this.askoStaking.dividendsOf(staker)
       const totalStaked = await this.askoStaking.totalStaked()
-      const initialDivis = await this.askoStaking.dividendsOf(stakerFirst)
-      const value = totalStaked.mul(new BN(10000)).div((new BN(10000)).sub(new BN(config.AskoStaking.stakingTaxBP)))
-      const tax = await this.askoStaking.findTaxAmount(value,config.AskoStaking.stakingTaxBP)
-      await this.askoStaking.stake(value,{from:stakerSecond})
-      const finalDivis = await this.askoStaking.dividendsOf(stakerFirst)
-      const stakerSecondDivis = await this.askoStaking.dividendsOf(stakerSecond)
-      expect(finalDivis.sub(initialDivis).toString())
-        .to.equal(tax.div(new BN(2)).toString())
-      expect(stakerSecondDivis.toString())
-        .to.equal(tax.div(new BN(2)).sub(new BN(1)).toString())
+      expect(tax.mul(stakerShares).div(totalStaked).toString())
+        .to.equal(finalStakerDivis.sub(initialStakerDivis).toString())
     })
-    it("When third staker increases total staked by 50%, others stakers dividends should increase by third of tax.", async function() {
-      const staker1 = stakers[0]
-      const staker2 = stakers[1]
-      const staker3 = stakers[2]
-      const totalStaked = await this.askoStaking.totalStaked()
-      const initialDivisStaker1 = await this.askoStaking.dividendsOf(staker1)
-      const initialDivisStaker2 = await this.askoStaking.dividendsOf(staker2)
-      const value = totalStaked.div(new BN(2)).mul(new BN(10000)).div((new BN(10000)).sub(new BN(config.AskoStaking.stakingTaxBP)))
-      const tax = await this.askoStaking.findTaxAmount(value,config.AskoStaking.stakingTaxBP)
-      await this.askoStaking.stake(value,{from:staker3})
-      const finalDivisStaker1 = await this.askoStaking.dividendsOf(staker1)
-      const finalDivisStaker2 = await this.askoStaking.dividendsOf(staker2)
-      const finalDivisStaker3 = await this.askoStaking.dividendsOf(staker3)
-      expect(finalDivisStaker1.sub(initialDivisStaker1).toString())
-        .to.equal(tax.div(new BN(3)).toString())
-      expect(finalDivisStaker2.sub(new BN(1)).sub(initialDivisStaker2).toString())
-        .to.equal(tax.div(new BN(3)).toString())
-      expect(finalDivisStaker3.toString())
-        .to.equal(tax.div(new BN(3)).toString())
-    })*/
   })
   //todo: add distribution tests
+  //todo: add dividends tests
+  //todo: add withdraw tests
+  //todo: add reinvest tests
 })

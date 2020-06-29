@@ -53,7 +53,7 @@ contract AskoStaking is Initializable, Ownable {
         totalStaked = totalStaked.add(stakeAmount);
         stakeValue[msg.sender] = stakeValue[msg.sender].add(stakeAmount);
         uint payout = profitPerShare.mul(stakeAmount);
-        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + int(payout);
+        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
         _increaseProfitPerShare(tax);
         require(askoToken.transferFrom(msg.sender, address(this), amount), "Stake failed due to failed transfer.");
         emit OnStake(msg.sender, amount, tax);
@@ -67,11 +67,15 @@ contract AskoStaking is Initializable, Ownable {
         if (stakeValue[msg.sender] == amount) totalStakers = totalStakers.sub(1);
         totalStaked = totalStaked.sub(amount);
         stakeValue[msg.sender] = stakeValue[msg.sender].sub(amount);
-        uint payout = earnings.add(profitPerShare.mul(stakeValue[msg.sender]));
-        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] - int(payout);
         _increaseProfitPerShare(tax);
         require(askoToken.transferFrom(address(this), msg.sender, earnings), "Unstake failed due to failed transfer.");
         emit OnUnstake(msg.sender, amount, tax);
+    }
+
+    function withdraw(uint amount) public {
+        require(dividendsOf(msg.sender) >= uintToInt(amount), "Cannot withdraw more dividends than you have earned.");
+        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(amount);
+        askoToken.transfer(msg.sender, amount);
     }
 
     function handleTaxDistribution(uint amount) public onlyAskoToken {
@@ -81,11 +85,20 @@ contract AskoStaking is Initializable, Ownable {
     }
 
     function dividendsOf(address staker) public view returns (int) {
-        return (int(profitPerShare.mul(stakeValue[staker]))-(stakerPayouts[staker])) / int(DISTRIBUTION_MULTIPLIER);
+        return (uintToInt(profitPerShare.mul(stakeValue[staker]))-(stakerPayouts[staker])) /
+                uintToInt(DISTRIBUTION_MULTIPLIER);
     }
 
     function findTaxAmount(uint value, uint taxBP) public pure returns (uint) {
         return value.mulBP(taxBP);
+    }
+
+    function uintToInt(uint val) internal pure returns (int) {
+        if (val >= uint(-1).div(2)) {
+            require(false, "Overflow. Cannot convert uint to int.");
+        } else {
+            return int(val);
+        }
     }
 
     function _increaseProfitPerShare(uint amount) internal {
