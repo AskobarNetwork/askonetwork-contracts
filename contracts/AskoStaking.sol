@@ -52,8 +52,9 @@ contract AskoStaking is Initializable, Ownable {
         totalStakers = totalStakers.add(1);
         totalStaked = totalStaked.add(stakeAmount);
         stakeValue[msg.sender] = stakeValue[msg.sender].add(stakeAmount);
-        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] +
-            int(profitPerShare * stakeAmount) - int(tax * DISTRIBUTION_MULTIPLIER);
+        uint payout = profitPerShare.mul(stakeAmount);
+        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + int(payout);
+        _increaseProfitPerShare(tax);
         require(askoToken.transferFrom(msg.sender, address(this), amount), "Stake failed due to failed transfer.");
         emit OnStake(msg.sender, amount, tax);
     }
@@ -66,9 +67,8 @@ contract AskoStaking is Initializable, Ownable {
         if (stakeValue[msg.sender] == amount) totalStakers = totalStakers.sub(1);
         totalStaked = totalStaked.sub(amount);
         stakeValue[msg.sender] = stakeValue[msg.sender].sub(amount);
-        int payout = int(profitPerShare*amount)+int(tax*DISTRIBUTION_MULTIPLIER);
-        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] - payout;
-
+        uint payout = earnings.add(profitPerShare.mul(stakeValue[msg.sender]));
+        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] - int(payout);
         _increaseProfitPerShare(tax);
         require(askoToken.transferFrom(address(this), msg.sender, earnings), "Unstake failed due to failed transfer.");
         emit OnUnstake(msg.sender, amount, tax);
