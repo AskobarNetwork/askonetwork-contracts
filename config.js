@@ -11,7 +11,7 @@ config.AskoToken = {
 
 config.AskoStaking = {
   stakingTaxBP: 100,
-  unStakingTaxBP: 100
+  unstakingTaxBP: 100
 }
 
 
