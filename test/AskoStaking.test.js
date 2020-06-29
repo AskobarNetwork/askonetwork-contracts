@@ -9,7 +9,6 @@ const AskoStaking = contract.fromArtifact("AskoStaking")
 const owner = accounts[0]
 const stakers = [accounts[1],accounts[2],accounts[3],accounts[4]]
 const nonStakerAccount = accounts[5]
-const nonHolderAccount = accounts[6]
 
 describe("AskoStaking", function() {
   before(async function() {
@@ -138,7 +137,28 @@ describe("AskoStaking", function() {
       const stakerSecondDivis = await this.askoStaking.dividendsOf(stakerSecond)
       expect(finalDivis.sub(initialDivis).toString())
         .to.equal(tax.div(new BN(2)).toString())
+      expect(stakerSecondDivis.toString())
+        .to.equal(tax.div(new BN(2)).sub(new BN(1)).toString())
     })
-    //TODO: more stake tests, unstake tests, distributions test
+    it("When third staker increases total staked by 50%, others stakers dividends should increase by third of tax.", async function() {
+      const staker1 = stakers[0]
+      const staker2 = stakers[1]
+      const staker3 = stakers[2]
+      const totalStaked = await this.askoStaking.totalStaked()
+      const initialDivisStaker1 = await this.askoStaking.dividendsOf(staker1)
+      const initialDivisStaker2 = await this.askoStaking.dividendsOf(staker2)
+      const value = totalStaked.div(new BN(2)).mul(new BN(10000)).div((new BN(10000)).sub(new BN(config.AskoStaking.stakingTaxBP)))
+      const tax = await this.askoStaking.findTaxAmount(value,config.AskoStaking.stakingTaxBP)
+      await this.askoStaking.stake(value,{from:staker3})
+      const finalDivisStaker1 = await this.askoStaking.dividendsOf(staker1)
+      const finalDivisStaker2 = await this.askoStaking.dividendsOf(staker2)
+      const finalDivisStaker3 = await this.askoStaking.dividendsOf(staker3)
+      expect(finalDivisStaker1.sub(initialDivisStaker1).toString())
+        .to.equal(tax.div(new BN(3)).toString())
+      expect(finalDivisStaker2.sub(new BN(1)).sub(initialDivisStaker2).toString())
+        .to.equal(tax.div(new BN(3)).toString())
+      expect(finalDivisStaker3.toString())
+        .to.equal(tax.div(new BN(3)).toString())
+    })
   })
 })
