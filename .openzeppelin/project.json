@@ -2,7 +2,8 @@
   "manifestVersion": "2.2",
   "contracts": {
     "AskoStaking": "AskoStaking",
-    "AskoToken": "AskoToken"
+    "AskoToken": "AskoToken",
+    "AskoPresale": "AskoPresale"
   },
   "dependencies": {},
   "name": "askonetwork-contracts",

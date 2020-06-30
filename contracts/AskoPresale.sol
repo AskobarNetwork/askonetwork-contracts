@@ -77,15 +77,14 @@ contract AskoPresale is Initializable, Ownable {
         maxbuyPerAddress = _maxbuyPerAddress;
         maximumPresaleEther = _maximumPresaleEther;
         requiresWhitelisting = _requiresWhitelisting;
-
         totalPresaleTokens = _totalPresaleTokens;
         totalUniswapTokens = _totalUniswapTokens;
 
-        require(askoToken.balanceOf(address(this)) == totalPresaleTokens.add(totalUniswapTokens));
-        askoToken.approve(address(uniswapRouter), totalUniswapTokens);
-
         uniswapRouter = IUniswapV2Router01(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
 
+        require(askoToken.balanceOf(address(this)) == totalPresaleTokens.add(totalUniswapTokens));
+        askoToken.approve(address(uniswapRouter), totalUniswapTokens);
+        
         //Due to issue in oz testing suite, the msg.sender might not be owner
         _transferOwnership(owner);
     }
