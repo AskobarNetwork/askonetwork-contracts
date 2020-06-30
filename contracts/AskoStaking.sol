@@ -26,9 +26,11 @@ contract AskoStaking is Initializable, Ownable {
     uint private profitPerShare;
     uint private emptyStakeTokens; //These are tokens given to the contract when there are no stakers.
 
-    event OnDistribute(uint amountSent);
+    event OnDistribute(address sender, uint amountSent);
     event OnStake(address sender, uint amount, uint tax);
     event OnUnstake(address sender, uint amount, uint tax);
+    event OnReinvest(address sender, uint amount, uint tax);
+    event OnWithdraw(address sender, uint amount);
 
     modifier onlyAskoToken {
         require(msg.sender == address(askoToken), "Can only be called by AskoToken contract.");
@@ -47,14 +49,8 @@ contract AskoStaking is Initializable, Ownable {
     function stake(uint amount) public {
         require(amount >= 1e18, "Must stake at least one ASKO.");
         require(askoToken.balanceOf(msg.sender) >= amount, "Cannot stake more ASKO than you hold unstaked.");
-        uint tax = findTaxAmount(amount, stakingTaxBP);
-        uint stakeAmount = amount.sub(tax);
-        totalStakers = totalStakers.add(1);
-        totalStaked = totalStaked.add(stakeAmount);
-        stakeValue[msg.sender] = stakeValue[msg.sender].add(stakeAmount);
-        uint payout = profitPerShare.mul(stakeAmount);
-        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
-        _increaseProfitPerShare(tax);
+        if (stakeValue[msg.sender] == 0) totalStakers = totalStakers.add(1);
+        uint tax = _addStake(amount);
         require(askoToken.transferFrom(msg.sender, address(this), amount), "Stake failed due to failed transfer.");
         emit OnStake(msg.sender, amount, tax);
     }
@@ -68,7 +64,7 @@ contract AskoStaking is Initializable, Ownable {
         totalStaked = totalStaked.sub(amount);
         stakeValue[msg.sender] = stakeValue[msg.sender].sub(amount);
         uint payout = profitPerShare.mul(amount).add(tax.mul(DISTRIBUTION_MULTIPLIER));
-        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] - int(payout);
+        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] - uintToInt(payout);
         _increaseProfitPerShare(tax);
         require(askoToken.transferFrom(address(this), msg.sender, earnings), "Unstake failed due to failed transfer.");
         emit OnUnstake(msg.sender, amount, tax);
@@ -78,6 +74,15 @@ contract AskoStaking is Initializable, Ownable {
         require(dividendsOf(msg.sender) >= amount, "Cannot withdraw more dividends than you have earned.");
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(amount.mul(DISTRIBUTION_MULTIPLIER));
         askoToken.transfer(msg.sender, amount);
+        emit OnWithdraw(msg.sender, amount);
+    }
+
+    function reinvest(uint amount) public {
+        require(dividendsOf(msg.sender) >= amount, "Cannot reinvest more dividends than you have earned.");
+        uint payout = amount.mul(DISTRIBUTION_MULTIPLIER);
+        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
+        uint tax = _addStake(amount);
+        emit OnReinvest(msg.sender, amount, tax);
     }
 
     function distribute(uint amount) public {
@@ -88,13 +93,13 @@ contract AskoStaking is Initializable, Ownable {
             askoToken.transferFrom(msg.sender, address(this), amount),
             "Distribution failed due to failed transfer."
         );
-        emit OnDistribute(amount);
+        emit OnDistribute(msg.sender, amount);
     }
 
     function handleTaxDistribution(uint amount) public onlyAskoToken {
         totalDistributions = totalDistributions.add(amount);
         _increaseProfitPerShare(amount);
-        emit OnDistribute(amount);
+        emit OnDistribute(msg.sender, amount);
     }
 
     function dividendsOf(address staker) public view returns (uint) {
@@ -112,6 +117,16 @@ contract AskoStaking is Initializable, Ownable {
         } else {
             return int(val);
         }
+    }
+
+    function _addStake(uint amount) internal returns (uint tax) {
+        tax = findTaxAmount(amount, stakingTaxBP);
+        uint stakeAmount = amount.sub(tax);
+        totalStaked = totalStaked.add(stakeAmount);
+        stakeValue[msg.sender] = stakeValue[msg.sender].add(stakeAmount);
+        uint payout = profitPerShare.mul(stakeAmount);
+        stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
+        _increaseProfitPerShare(tax);
     }
 
     function _increaseProfitPerShare(uint amount) internal {
