@@ -41,20 +41,13 @@ contract AskoPresale is Initializable, Ownable {
 
     modifier whenPresaleActive {
         require(totalPresaleEther < maximumPresaleEther, "Presale has sold out.");
-        require(!isClosedByOwner, "Presale is closed.");
         require(startTime != 0 && now > startTime, "Presale not yet started.");
-        require(endTime == 0 || now < endTime, "Presale has ended.");
+        require(!isPresaleEnded(), "Presale has ended.");
         _;
     }
 
     modifier whenPresaleFinished {
-        require(startTime != 0 && now > startTime, "Presale not yet started.");
-        require(
-            totalPresaleEther >= maximumPresaleEther ||
-            isClosedByOwner ||
-            (endTime != 0 && now > endTime),
-            "Presale has not yet ended."
-        );
+        require(isPresaleEnded());
         _;
     }
 
@@ -84,7 +77,7 @@ contract AskoPresale is Initializable, Ownable {
 
         require(askoToken.balanceOf(address(this)) == totalPresaleTokens.add(totalUniswapTokens));
         askoToken.approve(address(uniswapRouter), totalUniswapTokens);
-        
+
         //Due to issue in oz testing suite, the msg.sender might not be owner
         _transferOwnership(owner);
     }
@@ -127,6 +120,15 @@ contract AskoPresale is Initializable, Ownable {
         );
         etherPoolUniswap = etherPoolUniswap.sub(amountETH);
         totalUniswapTokens = totalUniswapTokens.sub(amountToken);
+    }
+
+    function isPresaleEnded() public view returns (bool) {
+        if (startTime == 0 || now < startTime) return false;
+        return (
+            totalPresaleEther >= maximumPresaleEther ||
+            isClosedByOwner ||
+            (endTime != 0 && now > endTime)
+        );
     }
 
     function setIsClosedByOwner(bool value) public onlyOwner {
