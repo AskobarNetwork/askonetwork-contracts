@@ -153,12 +153,12 @@ contract AskoPresale is Initializable, Ownable {
         }
     }
 
-    function withdrawFromDevfund(uint amount, address payable receiver) public onlyOwner {
+    function withdrawFromDevfund(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
         etherPoolDevfund = etherPoolDevfund.sub(amount);
         receiver.transfer(amount);
     }
 
-    function withdrawFromBuyback(uint amount, address payable receiver) public onlyOwner {
+    function withdrawFromBuyback(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
         etherPoolBuyback = etherPoolBuyback.sub(amount);
         receiver.transfer(amount);
     }
