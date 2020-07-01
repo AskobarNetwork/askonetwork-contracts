@@ -42,12 +42,13 @@ contract AskoPresale is Initializable, Ownable {
     modifier whenPresaleActive {
         require(totalPresaleEther < maximumPresaleEther, "Presale has sold out.");
         require(startTime != 0 && now > startTime, "Presale not yet started.");
-        require(!isPresaleEnded(), "Presale has ended.");
+        require(!_isPresaleEnded(), "Presale has ended.");
         _;
     }
 
     modifier whenPresaleFinished {
-        require(isPresaleEnded());
+        require(startTime != 0 && now > startTime, "Presale not yet started.");
+        require(_isPresaleEnded(), "Presale has not yet ended.");
         _;
     }
 
@@ -110,7 +111,7 @@ contract AskoPresale is Initializable, Ownable {
 
     function sendToUniswap() public whenPresaleFinished {
         require(etherPoolUniswap > 0, "No ether to send.");
-        (uint amountToken, uint amountETH, uint liquidity) = uniswapRouter.addLiquidityETH.value(etherPoolUniswap)(
+        (uint amountToken, uint amountETH, ) = uniswapRouter.addLiquidityETH.value(etherPoolUniswap)(
             address(askoToken),
             totalUniswapTokens,
             totalUniswapTokens,
@@ -122,13 +123,14 @@ contract AskoPresale is Initializable, Ownable {
         totalUniswapTokens = totalUniswapTokens.sub(amountToken);
     }
 
-    function isPresaleEnded() public view returns (bool) {
-        if (startTime == 0 || now < startTime) return false;
-        return (
-            totalPresaleEther >= maximumPresaleEther ||
-            isClosedByOwner ||
-            (endTime != 0 && now > endTime)
-        );
+    function withdrawFromDevfund(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
+        etherPoolDevfund = etherPoolDevfund.sub(amount);
+        receiver.transfer(amount);
+    }
+
+    function withdrawFromBuyback(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
+        etherPoolBuyback = etherPoolBuyback.sub(amount);
+        receiver.transfer(amount);
     }
 
     function setIsClosedByOwner(bool value) public onlyOwner {
@@ -153,14 +155,14 @@ contract AskoPresale is Initializable, Ownable {
         }
     }
 
-    function withdrawFromDevfund(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
-        etherPoolDevfund = etherPoolDevfund.sub(amount);
-        receiver.transfer(amount);
-    }
 
-    function withdrawFromBuyback(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
-        etherPoolBuyback = etherPoolBuyback.sub(amount);
-        receiver.transfer(amount);
+    function _isPresaleEnded() internal view returns (bool) {
+        if (startTime == 0 || now < startTime) return false;
+        return (
+            totalPresaleEther >= maximumPresaleEther ||
+            isClosedByOwner ||
+            (endTime != 0 && now > endTime)
+        );
     }
 
     function _calculateRate() internal view returns (uint) {

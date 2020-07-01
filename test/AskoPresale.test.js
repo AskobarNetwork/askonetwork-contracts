@@ -74,5 +74,66 @@ describe("AskoPresale", function() {
         expect(finalWhitelist).to.equal(false)
       })
     })
+    describe("#setWhitelistForAll", function() {
+      it("Should whitelist all addresses", async function() {
+        await this.askoPresale.setWhitelistForAll(buyers,true,{from:owner})
+        let whitelistVals = await Promise.all(buyers.map((buyer)=>{
+          return this.askoPresale.whitelist(buyer)
+        }))
+        expect(whitelistVals.reduce((acc,val)=>{
+          return acc && val
+        })).to.equal(true)
+      })
+    })
+  })
+
+
+
+  describe("State: Before Start", function() {
+    describe("#deposit", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer}),
+          "Presale not yet started."
+        )
+      })
+    })
+    describe("#redeem", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.redeem({from:buyer}),
+          "Presale not yet started."
+        )
+      })
+    })
+    describe("#sendToUniswap", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.sendToUniswap({from:buyer}),
+          "Presale not yet started."
+        )
+      })
+    })
+    describe("#withdrawFromDevfund", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.withdrawFromDevfund(ether("1"),owner,{from:owner}),
+          "Presale not yet started."
+        )
+      })
+    })
+    describe("#withdrawFromBuyback", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.withdrawFromBuyback(ether("1"),owner,{from:owner}),
+          "Presale not yet started."
+        )
+      })
+    })
   })
 })
