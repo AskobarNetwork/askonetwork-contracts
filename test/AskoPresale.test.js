@@ -10,6 +10,8 @@ const AskoPresale = contract.fromArtifact("AskoPresale")
 const owner = accounts[0]
 const buyers = [accounts[1],accounts[2],accounts[3],accounts[4]]
 const notWhitelisted = accounts[5]
+const devfundAccount = accounts[6]
+const buybackAccount = accounts[7]
 
 describe("AskoPresale", function() {
   before(async function() {
@@ -345,6 +347,80 @@ describe("AskoPresale", function() {
         await expectRevert(
           this.askoPresale.deposit({from:buyer,value:value}),
           "Presale has ended."
+        )
+      })
+    })
+  })
+
+
+
+  describe("State: Presale Ended", function() {
+    describe("#deposit", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer}),
+          "Presale has ended."
+        )
+      })
+    })
+    describe("#redeem", function() {
+      it("Should revert if not a buyer", async function() {
+        const buyer = buyers[3]
+        await expectRevert(
+          this.askoPresale.redeem({from:buyer}),
+          "No redemption available."
+        )
+      })
+      describe("On successful redemption", function(){
+        before(async function() {
+          const buyer = buyers[0]
+          this.askoPresale.redeem({from:buyer})
+        })
+        it("Should revert if attempted again", async function() {
+          const buyer = buyers[0]
+          await expectRevert(
+            this.askoPresale.redeem({from:buyer}),
+            "No redemption available."
+          )
+        })
+        it("Should increase buyer's tokens by rate", async function() {
+          const buyer = buyers[0]
+          const rate = await this.askoPresale.calculateRate()
+          const actual = await this.askoToken.balanceOf(buyer)
+          const expected = rate.mul(new BN(config.AskoPresale.maxBuyPerAddress))
+          expect(actual.toString()).to.not.equal("0")
+          expect(actual.toString()).to.equal(expected.toString())
+        })
+      })
+    })
+    describe("#withdrawFromDevfund", function() {
+      it("Should increase ether balance of receiver", async function() {
+        const initialBal = new BN((await web3.eth.getBalance(buybackAccount)).toString())
+        const devFundPool = await this.askoPresale.etherPoolDevfund()
+        await this.askoPresale.withdrawFromDevfund(devFundPool,devfundAccount,{from: owner})
+        const finalBal = new BN((await web3.eth.getBalance(devfundAccount)).toString())
+        expect(finalBal.sub(initialBal).toString()).to.equal(devFundPool.toString())
+      })
+      it("Should revert after empty", async function() {
+        await expectRevert(
+          this.askoPresale.withdrawFromDevfund(new BN(1),owner,{from:owner}),
+          "Amount exceeds pool."
+        )
+      })
+    })
+    describe("#withdrawFromBuyback", function() {
+      it("Should increase ether balance of receiver", async function() {
+        const initialBal = new BN((await web3.eth.getBalance(buybackAccount)).toString())
+        const buybackPool = await this.askoPresale.etherPoolBuyback()
+        await this.askoPresale.withdrawFromBuyback(buybackPool,buybackAccount,{from: owner})
+        const finalBal = new BN((await web3.eth.getBalance(buybackAccount)).toString())
+        expect(finalBal.sub(initialBal).toString()).to.equal(buybackPool.toString())
+      })
+      it("Should revert after empty", async function() {
+        await expectRevert(
+          this.askoPresale.withdrawFromBuyback(new BN(1),owner,{from:owner}),
+          "Amount exceeds pool."
         )
       })
     })

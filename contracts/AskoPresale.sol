@@ -107,9 +107,10 @@ contract AskoPresale is Initializable, Ownable {
     }
 
     function redeem() public whenPresaleFinished {
-        require(depositAccounts[msg.sender] > 0, "No ether deposit was made by this address.");
-        uint amount = depositAccounts[msg.sender].mul(_calculateRate());
-        askoToken.mint(msg.sender, amount);
+        require(depositAccounts[msg.sender] > 0, "No redemption available.");
+        uint amount = depositAccounts[msg.sender].mul(calculateRate());
+        depositAccounts[msg.sender] = 0;
+        askoToken.transfer(msg.sender, amount);
     }
 
     function sendToUniswap() public whenPresaleFinished {
@@ -127,11 +128,13 @@ contract AskoPresale is Initializable, Ownable {
     }
 
     function withdrawFromDevfund(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
+        require(amount <= etherPoolDevfund, "Amount exceeds pool.");
         etherPoolDevfund = etherPoolDevfund.sub(amount);
         receiver.transfer(amount);
     }
 
     function withdrawFromBuyback(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
+        require(amount <= etherPoolBuyback, "Amount exceeds pool.");
         etherPoolBuyback = etherPoolBuyback.sub(amount);
         receiver.transfer(amount);
     }
@@ -166,6 +169,10 @@ contract AskoPresale is Initializable, Ownable {
         endTime = time;
     }
 
+    function calculateRate() public view returns (uint) {
+        return totalPresaleTokens.div(totalPresaleEther);
+    }
+
     function _isPresaleEnded() internal view returns (bool) {
         if (startTime == 0 || now < startTime) return false;
         return (
@@ -173,10 +180,6 @@ contract AskoPresale is Initializable, Ownable {
             isClosedByOwner ||
             (endTime != 0 && now > endTime)
         );
-    }
-
-    function _calculateRate() internal view returns (uint) {
-        return totalPresaleTokens.div(totalPresaleEther);
     }
 
 }
