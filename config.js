@@ -17,7 +17,7 @@ config.AskoStaking = {
 config.AskoPresale = {
   buybackBP: 1500,
   devfundBP: 1000,
-  maxbuyPerAddress: ether("5"),
+  maxBuyPerAddress: ether("5"),
   maximumPresaleEther: ether("200"),
   requiresWhitelisting: true,
   totalPresaleTokens: ether("40000000"),

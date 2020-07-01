@@ -38,8 +38,8 @@ describe("AskoPresale", function() {
     await this.askoPresale.initialize(
       presaleParams.buybackBP,
       presaleParams.devfundBP,
-      presaleParams.maxbuyPerAddress,
-      presaleParams.maximumPresaleEther,
+      presaleParams.maxBuyPerAddress,
+      ether("12"),
       presaleParams.requiresWhitelisting,
       presaleParams.totalPresaleTokens,
       presaleParams.totalUniswapTokens,
@@ -89,7 +89,7 @@ describe("AskoPresale", function() {
 
 
 
-  describe("State: Before Start", function() {
+  describe("State: Before Presale Start", function() {
     describe("#deposit", function() {
       it("Should revert", async function() {
         const buyer = buyers[0]
@@ -132,6 +132,219 @@ describe("AskoPresale", function() {
         await expectRevert(
           this.askoPresale.withdrawFromBuyback(ether("1"),owner,{from:owner}),
           "Presale not yet started."
+        )
+      })
+    })
+  })
+
+
+
+  describe("State: Presale Active", function() {
+    before(async function() {
+      await this.askoPresale.setStartTime((Math.floor(Date.now()/1000) - 60).toString(),{from:owner})
+    })
+    describe("#redeem", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.redeem({from:buyer}),
+          "Presale has not yet ended."
+        )
+      })
+    })
+    describe("#sendToUniswap", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.sendToUniswap({from:buyer}),
+          "Presale has not yet ended."
+        )
+      })
+    })
+    describe("#withdrawFromDevfund", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.withdrawFromDevfund(ether("1"),owner,{from:owner}),
+          "Presale has not yet ended."
+        )
+      })
+    })
+    describe("#withdrawFromBuyback", function() {
+      it("Should revert", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.withdrawFromBuyback(ether("1"),owner,{from:owner}),
+          "Presale has not yet ended."
+        )
+      })
+    })
+    describe("#deposit", function() {
+      it("Should revert if not on whitelist", async function() {
+        await expectRevert(
+          this.askoPresale.deposit({from:notWhitelisted}),
+          "Address is not whitelisted for this private presale."
+        )
+      })
+      it("Should revert if buy higher than max", async function() {
+        const buyer = buyers[0]
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer,value:config.AskoPresale.maxBuyPerAddress.add(new BN(1))}),
+          "Deposit exceeds max buy per address."
+        )
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer,value:config.AskoPresale.maxBuyPerAddress.add(ether("10000000000000"))}),
+          "Deposit exceeds max buy per address."
+        )
+      })
+    })
+    it("Should revert if less than 1 wei", async function() {
+      const buyer = buyers[0]
+      await expectRevert(
+        this.askoPresale.deposit({from:buyer,value:"0"}),
+        "Must purchase at least 1 wei."
+      )
+    })
+    describe("On buyer1 success", function(){
+      before(async function(){
+        const buyer = buyers[0]
+        this.askoPresale.deposit({from:buyer,value:config.AskoPresale.maxBuyPerAddress})
+      })
+      it("Should increase Devfund pool by BP of value.", async function() {
+        const buyer = buyers[0]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.etherPoolDevfund()
+        const expected = value.mul(new BN(config.AskoPresale.devfundBP)).div(new BN(10000))
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase Buyback pool by BP of value.", async function() {
+        const buyer = buyers[0]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.etherPoolBuyback()
+        const expected = value.mul(new BN(config.AskoPresale.buybackBP)).div(new BN(10000))
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase Uniswap pool by value - devfund - buyback.", async function() {
+        const buyer = buyers[0]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.etherPoolUniswap()
+        const buyback = await this.askoPresale.etherPoolBuyback()
+        const devfund = await this.askoPresale.etherPoolDevfund()
+        const expected = value.sub(devfund).sub(buyback)
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase depositAccounts(sender) by value.", async function() {
+        const buyer = buyers[0]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.depositAccounts(buyer)
+        const expected = value
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase totalPresaleEther by value.", async function() {
+        const buyer = buyers[0]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.totalPresaleEther()
+        const expected = value
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+    })
+    describe("On buyer2 success", function(){
+      before(async function(){
+        const buyer = buyers[1]
+        this.askoPresale.deposit({from:buyer,value:config.AskoPresale.maxBuyPerAddress})
+      })
+      it("Should increase Devfund pool by BP of value.", async function() {
+        const buyer = buyers[1]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.etherPoolDevfund()
+        const expected = value.mul(new BN(config.AskoPresale.devfundBP)).div(new BN(10000)).mul(new BN(2))
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase Buyback pool by BP of value.", async function() {
+        const buyer = buyers[1]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.etherPoolBuyback()
+        const expected = value.mul(new BN(config.AskoPresale.buybackBP)).div(new BN(10000)).mul(new BN(2))
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase Uniswap pool by value - devfund - buyback.", async function() {
+        const buyer = buyers[1]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.etherPoolUniswap()
+        const buyback = await this.askoPresale.etherPoolBuyback()
+        const devfund = await this.askoPresale.etherPoolDevfund()
+        const expected = value.mul(new BN(2)).sub(devfund).sub(buyback)
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase depositAccounts(sender) by value.", async function() {
+        const buyer = buyers[1]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.depositAccounts(buyer)
+        const expected = value
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+      it("Should increase totalPresaleEther by value.", async function() {
+        const buyer = buyers[1]
+        const value = config.AskoPresale.maxBuyPerAddress
+        const actual = await this.askoPresale.totalPresaleEther()
+        const expected = value.mul(new BN(2))
+        expect(actual.toString()).to.not.equal("0")
+        expect(actual.toString()).to.equal(expected.toString())
+      })
+    })
+    describe("On final buyer attempts", function(){
+      it("Should revert if greater than maxBuyPerAddress", async function() {
+        const buyer = buyers[2]
+        const value = config.AskoPresale.maxBuyPerAddress
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer,value:value}),
+          "Purchase exceeds presale maximum."
+        )
+      })
+      it("Should revert if closed", async function() {
+        const buyer = buyers[2]
+        const value = ether("2")
+        await this.askoPresale.setIsClosedByOwner(true,{from:owner})
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer,value:value}),
+          "Presale has ended."
+        )
+      })
+      it("Should revert if time is after endtime.", async function() {
+        await this.askoPresale.setEndTime((Math.floor(Date.now()/1000) - 30).toString(),{from:owner})
+        await this.askoPresale.setIsClosedByOwner(false,{from:owner})
+        const buyer = buyers[2]
+        const value = config.AskoPresale.maxBuyPerAddress
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer,value:value}),
+          "Presale has ended."
+        )
+      })
+      it("Should succeed if sending value to maxcap.", async function() {
+        await this.askoPresale.setEndTime("0",{from:owner})
+        const buyer = buyers[2]
+        const startPresaleEther = await this.askoPresale.totalPresaleEther()
+        const maxPresaleEther = await this.askoPresale.maximumPresaleEther()
+        const value = maxPresaleEther.sub(startPresaleEther)
+        await this.askoPresale.deposit({from:buyer,value:value})
+        const finalPresaleEther = await this.askoPresale.totalPresaleEther()
+        expect(finalPresaleEther.toString()).to.equal(maxPresaleEther.toString())
+      })
+      it("Should revert after cap exceeded", async function() {
+        const buyer = buyers[2]
+        const value = new BN(1)
+        await expectRevert(
+          this.askoPresale.deposit({from:buyer,value:value}),
+          "Presale has ended."
         )
       })
     })

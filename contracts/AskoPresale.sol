@@ -11,7 +11,7 @@ contract AskoPresale is Initializable, Ownable {
     using BasisPoints for uint;
     using SafeMath for uint;
 
-    uint public maxbuyPerAddress;
+    uint public maxBuyPerAddress;
 
     uint public maximumPresaleEther;
     uint public totalPresaleEther;
@@ -36,11 +36,10 @@ contract AskoPresale is Initializable, Ownable {
     ERC20Mintable private askoToken;
     IUniswapV2Router01 private uniswapRouter;
 
-    mapping(address => uint) public deposits;
+    mapping(address => uint) public depositAccounts;
     mapping(address => bool) public whitelist;
 
     modifier whenPresaleActive {
-        require(totalPresaleEther < maximumPresaleEther, "Presale has sold out.");
         require(startTime != 0 && now > startTime, "Presale not yet started.");
         require(!_isPresaleEnded(), "Presale has ended.");
         _;
@@ -55,7 +54,7 @@ contract AskoPresale is Initializable, Ownable {
     function initialize(
         uint _buybackBP,
         uint _devfundBP,
-        uint _maxbuyPerAddress,
+        uint _maxBuyPerAddress,
         uint _maximumPresaleEther,
         bool _requiresWhitelisting,
         uint _totalPresaleTokens,
@@ -68,7 +67,7 @@ contract AskoPresale is Initializable, Ownable {
         buybackBP = _buybackBP;
         devfundBP = _devfundBP;
         askoToken = _askoToken;
-        maxbuyPerAddress = _maxbuyPerAddress;
+        maxBuyPerAddress = _maxBuyPerAddress;
         maximumPresaleEther = _maximumPresaleEther;
         requiresWhitelisting = _requiresWhitelisting;
         totalPresaleTokens = _totalPresaleTokens;
@@ -87,8 +86,12 @@ contract AskoPresale is Initializable, Ownable {
         if (requiresWhitelisting) {
             require(whitelist[msg.sender], "Address is not whitelisted for this private presale.");
         }
-        require(deposits[msg.sender].add(msg.value) <= maxbuyPerAddress, "Deposit exceeds max buy per address.");
+        require(
+            depositAccounts[msg.sender].add(msg.value) <= maxBuyPerAddress,
+            "Deposit exceeds max buy per address."
+        );
         require(totalPresaleEther.add(msg.value) <= maximumPresaleEther, "Purchase exceeds presale maximum.");
+        require(msg.value > 0, "Must purchase at least 1 wei.");
 
         uint etherForDevfund = msg.value.mulBP(devfundBP);
         uint etherForBuyback = msg.value.mulBP(buybackBP);
@@ -100,12 +103,12 @@ contract AskoPresale is Initializable, Ownable {
 
         totalPresaleEther = totalPresaleEther.add(msg.value);
 
-        deposits[msg.sender] = deposits[msg.sender].add(msg.value);
+        depositAccounts[msg.sender] = depositAccounts[msg.sender].add(msg.value);
     }
 
     function redeem() public whenPresaleFinished {
-        require(deposits[msg.sender] > 0, "No ether deposit was made by this address.");
-        uint amount = deposits[msg.sender].mul(_calculateRate());
+        require(depositAccounts[msg.sender] > 0, "No ether deposit was made by this address.");
+        uint amount = depositAccounts[msg.sender].mul(_calculateRate());
         askoToken.mint(msg.sender, amount);
     }
 
@@ -155,6 +158,13 @@ contract AskoPresale is Initializable, Ownable {
         }
     }
 
+    function setStartTime(uint time) public onlyOwner {
+        startTime = time;
+    }
+
+    function setEndTime(uint time) public onlyOwner {
+        endTime = time;
+    }
 
     function _isPresaleEnded() internal view returns (bool) {
         if (startTime == 0 || now < startTime) return false;
