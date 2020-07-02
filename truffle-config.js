@@ -1,3 +1,6 @@
+const HDWalletProvider = require("@truffle/hdwallet-provider")
+const mnemonic = require("./mnemonic")
+
 module.exports = {
   networks: {
     development: {
@@ -5,6 +8,14 @@ module.exports = {
      port: 7545,
      network_id: "*",
     },
+  },
+  networks: {
+    mainnet: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic, "https://mainnet.infura.io/v3/e88244aa5b1b4f19aa4b5045ba53b8b9")
+      },
+      network_id: 1
+    }
   },
 
   compilers: {

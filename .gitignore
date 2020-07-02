@@ -5,6 +5,9 @@ build/contracts
 .openzeppelin/.session
 .openzeppelin/dev-*
 
+#secret mnemonic
+mnemonic.js
+
 # Logs
 logs
 *.log
