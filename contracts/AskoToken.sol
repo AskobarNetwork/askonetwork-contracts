@@ -16,7 +16,7 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
     using SafeMath for uint;
 
     uint public taxBP;
-    bool public isTaxActive = false;
+    bool public isTaxActive;
     AskoStaking private askoStaking;
     mapping(address => bool) private trustedContracts;
 
@@ -25,6 +25,8 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
         address owner, uint _taxBP, AskoStaking _askoStaking
     ) public initializer {
         taxBP = _taxBP;
+
+        isTaxActive = false;
 
         Ownable.initialize(msg.sender);
 

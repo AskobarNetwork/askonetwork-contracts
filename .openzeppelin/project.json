@@ -3,10 +3,11 @@
   "contracts": {
     "AskoStaking": "AskoStaking",
     "AskoToken": "AskoToken",
-    "AskoPresale": "AskoPresale",
-    "ERC20": "ERC20"
+    "AskoPresale": "AskoPresale"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@openzeppelin/contracts-ethereum-package": "^2.5.0"
+  },
   "name": "askonetwork-contracts",
   "version": "1.0.0",
   "telemetryOptIn": true,

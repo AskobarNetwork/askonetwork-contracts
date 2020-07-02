@@ -5,11 +5,9 @@ module.exports = {
   networks: {
     development: {
      host: "127.0.0.1",
-     port: 7545,
+     port: 8545,
      network_id: "*",
     },
-  },
-  networks: {
     mainnet: {
       provider: function() {
         return new HDWalletProvider(mnemonic, "https://mainnet.infura.io/v3/e88244aa5b1b4f19aa4b5045ba53b8b9")

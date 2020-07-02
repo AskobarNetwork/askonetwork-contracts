@@ -28,7 +28,7 @@ async function initialize(accounts) {
     askoStaking.address
   )
 
-  await this.askoStaking.initialize(
+  await askoStaking.initialize(
     stakingParams.stakingTaxBP,
     stakingParams.unstakingTaxBP,
     owner,
@@ -54,7 +54,7 @@ async function initialize(accounts) {
   )
 
   askoPresale.setStartTime(launchParams.startTime.toString(),{from:owner})
-  
+
 }
 
 module.exports = function(deployer, networkName, accounts) {

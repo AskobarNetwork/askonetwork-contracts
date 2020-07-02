@@ -29,9 +29,9 @@ contract AskoPresale is Initializable, Ownable {
     uint public startTime;
     uint public endTime;
 
-    bool public isClosedByOwner = false;
+    bool public isClosedByOwner;
     bool public requiresWhitelisting;
-    bool public hasSentToUniswap = false;
+    bool public hasSentToUniswap;
 
     ERC20Mintable private askoToken;
     IUniswapV2Router01 private uniswapRouter;
@@ -77,6 +77,9 @@ contract AskoPresale is Initializable, Ownable {
         requiresWhitelisting = _requiresWhitelisting;
         totalPresaleTokens = _totalPresaleTokens;
         totalUniswapTokens = _totalUniswapTokens;
+
+        isClosedByOwner = false;
+        hasSentToUniswap = false;
 
         uniswapRouter = IUniswapV2Router01(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
 
