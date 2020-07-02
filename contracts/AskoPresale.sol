@@ -51,6 +51,11 @@ contract AskoPresale is Initializable, Ownable {
         _;
     }
 
+    modifier whenSentToUniswap {
+        require(hasSentToUniswap, "Ether must be sent to Uniswap first.");
+        _;
+    }
+
     function initialize(
         uint _buybackBP,
         uint _devfundBP,
@@ -106,7 +111,7 @@ contract AskoPresale is Initializable, Ownable {
         depositAccounts[msg.sender] = depositAccounts[msg.sender].add(msg.value);
     }
 
-    function redeem() public whenPresaleFinished {
+    function redeem() public whenPresaleFinished whenSentToUniswap {
         require(depositAccounts[msg.sender] > 0, "No redemption available.");
         uint amount = depositAccounts[msg.sender].mul(calculateRate());
         depositAccounts[msg.sender] = 0;
@@ -123,17 +128,22 @@ contract AskoPresale is Initializable, Ownable {
             address(this),
             now.add(3600)
         );
+        hasSentToUniswap = true;
         etherPoolUniswap = etherPoolUniswap.sub(amountETH);
         totalUniswapTokens = totalUniswapTokens.sub(amountToken);
     }
 
-    function withdrawFromDevfund(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
+    function withdrawFromDevfund(uint amount, address payable receiver) public
+        onlyOwner whenPresaleFinished whenSentToUniswap
+    {
         require(amount <= etherPoolDevfund, "Amount exceeds pool.");
         etherPoolDevfund = etherPoolDevfund.sub(amount);
         receiver.transfer(amount);
     }
 
-    function withdrawFromBuyback(uint amount, address payable receiver) public onlyOwner whenPresaleFinished {
+    function withdrawFromBuyback(uint amount, address payable receiver) public
+        onlyOwner whenPresaleFinished whenSentToUniswap
+    {
         require(amount <= etherPoolBuyback, "Amount exceeds pool.");
         etherPoolBuyback = etherPoolBuyback.sub(amount);
         receiver.transfer(amount);

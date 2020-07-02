@@ -24,4 +24,7 @@ config.AskoPresale = {
   totalUniswapTokens: ether("24000000")
 }
 
+config.Launch = {
+  startTime: 1593696600
+}
 module.exports = config

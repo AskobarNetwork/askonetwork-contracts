@@ -1,6 +1,10 @@
 #SC builds
 build/contracts
 
+#openzeppeling sessions
+.openzeppelin/.session
+.openzeppelin/dev-*
+
 # Logs
 logs
 *.log

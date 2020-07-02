@@ -31,7 +31,7 @@ describe("AskoPresale", function() {
       this.askoStaking.address
     )
 
-    this.askoToken.mint(
+    await this.askoToken.mint(
       this.askoPresale.address,
       presaleParams.totalPresaleTokens.add(presaleParams.totalUniswapTokens),
       {from: owner}
@@ -355,6 +355,9 @@ describe("AskoPresale", function() {
 
 
   describe("State: Presale Ended", function() {
+    before(async function (){
+      await this.askoPresale.setHasSentToUniswap(true,{from:owner})
+    })
     describe("#deposit", function() {
       it("Should revert", async function() {
         const buyer = buyers[0]

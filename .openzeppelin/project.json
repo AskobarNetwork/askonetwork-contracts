@@ -3,7 +3,8 @@
   "contracts": {
     "AskoStaking": "AskoStaking",
     "AskoToken": "AskoToken",
-    "AskoPresale": "AskoPresale"
+    "AskoPresale": "AskoPresale",
+    "ERC20": "ERC20"
   },
   "dependencies": {},
   "name": "askonetwork-contracts",
