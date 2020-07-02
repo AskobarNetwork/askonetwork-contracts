@@ -1,0 +1,763 @@
+{
+  "contracts": {
+    "AskoPresale": {
+      "address": "0xBdA505100048E0574e3207F696199FE57D7a5032",
+      "constructorCode": "6080604052612018806100136000396000f3fe",
+      "bodyBytecodeHash": "ab9b64ba18438662d112f197ec01cfa87495006b778c2709e67b1bd308151c1c",
+      "localBytecodeHash": "6f031d6e0941014b4eba6dc92dcb6574a71dc1bc21780cd6397ca427f487a600",
+      "deployedBytecodeHash": "6f031d6e0941014b4eba6dc92dcb6574a71dc1bc21780cd6397ca427f487a600",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        },
+        "t_mapping<t_uint256>": {
+          "id": "t_mapping<t_uint256>",
+          "valueType": "t_uint256",
+          "label": "mapping(key => uint256)",
+          "kind": "mapping"
+        },
+        "t_mapping<t_bool>": {
+          "id": "t_mapping<t_bool>",
+          "valueType": "t_bool",
+          "label": "mapping(key => bool)",
+          "kind": "mapping"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 6849,
+          "type": "t_bool",
+          "src": "757:24:32"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 6851,
+          "type": "t_bool",
+          "src": "876:25:32"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 6913,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:32"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "_owner",
+          "astId": 5970,
+          "type": "t_address",
+          "src": "526:22:25"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "______gap",
+          "astId": 6083,
+          "type": "t_array:50<t_uint256>",
+          "src": "2471:29:25"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "maxBuyPerAddress",
+          "astId": 19,
+          "type": "t_uint256",
+          "src": "569:28:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "maximumPresaleEther",
+          "astId": 21,
+          "type": "t_uint256",
+          "src": "606:31:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "totalPresaleEther",
+          "astId": 23,
+          "type": "t_uint256",
+          "src": "644:29:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "totalPresaleTokens",
+          "astId": 25,
+          "type": "t_uint256",
+          "src": "682:30:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "totalUniswapTokens",
+          "astId": 27,
+          "type": "t_uint256",
+          "src": "719:30:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "etherPoolDevfund",
+          "astId": 29,
+          "type": "t_uint256",
+          "src": "758:28:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "etherPoolBuyback",
+          "astId": 31,
+          "type": "t_uint256",
+          "src": "793:28:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "etherPoolUniswap",
+          "astId": 33,
+          "type": "t_uint256",
+          "src": "828:28:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "buybackBP",
+          "astId": 35,
+          "type": "t_uint256",
+          "src": "865:22:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "devfundBP",
+          "astId": 37,
+          "type": "t_uint256",
+          "src": "894:22:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "startTime",
+          "astId": 39,
+          "type": "t_uint256",
+          "src": "925:21:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "endTime",
+          "astId": 41,
+          "type": "t_uint256",
+          "src": "953:19:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "isClosedByOwner",
+          "astId": 43,
+          "type": "t_bool",
+          "src": "981:27:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "requiresWhitelisting",
+          "astId": 45,
+          "type": "t_bool",
+          "src": "1015:32:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "hasSentToUniswap",
+          "astId": 47,
+          "type": "t_bool",
+          "src": "1054:28:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "askoToken",
+          "astId": 49,
+          "type": "t_address",
+          "src": "1091:31:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "uniswapRouter",
+          "astId": 51,
+          "type": "t_address",
+          "src": "1129:40:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "depositAccounts",
+          "astId": 55,
+          "type": "t_mapping<t_uint256>",
+          "src": "1178:47:0"
+        },
+        {
+          "contract": "AskoPresale",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "label": "whitelist",
+          "astId": 59,
+          "type": "t_mapping<t_bool>",
+          "src": "1232:41:0"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    },
+    "AskoStaking": {
+      "address": "0xE1676411B677902A9c6eA46d61a398B374eCBc21",
+      "constructorCode": "6080604052611884806100136000396000f3fe",
+      "bodyBytecodeHash": "0ea80c1b43e9f809c280ae9af4e9ea48bf1e9ac90b020b8eafbabbb8fa5d3743",
+      "localBytecodeHash": "57a7b0e32ba5ccc0b56e15e4d1d8bcb17f44daab7543abf29efd5216840ae0d3",
+      "deployedBytecodeHash": "57a7b0e32ba5ccc0b56e15e4d1d8bcb17f44daab7543abf29efd5216840ae0d3",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        },
+        "t_mapping<t_uint256>": {
+          "id": "t_mapping<t_uint256>",
+          "valueType": "t_uint256",
+          "label": "mapping(key => uint256)",
+          "kind": "mapping"
+        },
+        "t_int256": {
+          "id": "t_int256",
+          "kind": "elementary",
+          "label": "int256"
+        },
+        "t_mapping<t_int256>": {
+          "id": "t_mapping<t_int256>",
+          "valueType": "t_int256",
+          "label": "mapping(key => int256)",
+          "kind": "mapping"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 6849,
+          "type": "t_bool",
+          "src": "757:24:32"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 6851,
+          "type": "t_bool",
+          "src": "876:25:32"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 6913,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:32"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "_owner",
+          "astId": 5970,
+          "type": "t_address",
+          "src": "526:22:25"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "______gap",
+          "astId": 6083,
+          "type": "t_array:50<t_uint256>",
+          "src": "2471:29:25"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "stakingTaxBP",
+          "astId": 678,
+          "type": "t_uint256",
+          "src": "566:24:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "unstakingTaxBP",
+          "astId": 680,
+          "type": "t_uint256",
+          "src": "597:26:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "askoToken",
+          "astId": 682,
+          "type": "t_address",
+          "src": "630:24:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "stakeValue",
+          "astId": 686,
+          "type": "t_mapping<t_uint256>",
+          "src": "663:42:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "stakerPayouts",
+          "astId": 690,
+          "type": "t_mapping<t_int256>",
+          "src": "712:45:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "totalDistributions",
+          "astId": 692,
+          "type": "t_uint256",
+          "src": "766:30:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "totalStaked",
+          "astId": 694,
+          "type": "t_uint256",
+          "src": "803:23:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "totalStakers",
+          "astId": 696,
+          "type": "t_uint256",
+          "src": "833:24:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "profitPerShare",
+          "astId": 698,
+          "type": "t_uint256",
+          "src": "864:27:1"
+        },
+        {
+          "contract": "AskoStaking",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "label": "emptyStakeTokens",
+          "astId": 700,
+          "type": "t_uint256",
+          "src": "898:29:1"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    },
+    "AskoToken": {
+      "address": "0x11c38e7b0224a17311c26FcaD590052592D689d1",
+      "constructorCode": "6080604052612991806100136000396000f3fe",
+      "bodyBytecodeHash": "3daa09ff5fdfe466914273cba6d5359965a332f3be8b79b3a1e6745c4d0ea5f2",
+      "localBytecodeHash": "b77d5628d88e47fab0f388c2cdb9b864d5b5f0ef332cd6d285dabf92bffe0028",
+      "deployedBytecodeHash": "b77d5628d88e47fab0f388c2cdb9b864d5b5f0ef332cd6d285dabf92bffe0028",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_mapping<t_uint256>": {
+          "id": "t_mapping<t_uint256>",
+          "valueType": "t_uint256",
+          "label": "mapping(key => uint256)",
+          "kind": "mapping"
+        },
+        "t_struct<Roles.Role>": {
+          "id": "t_struct<Roles.Role>",
+          "kind": "struct",
+          "label": "Roles.Role",
+          "members": [
+            {
+              "label": "bearer",
+              "astId": 5347,
+              "type": "t_mapping<t_bool>",
+              "src": "150:32:20"
+            }
+          ]
+        },
+        "t_mapping<t_bool>": {
+          "id": "t_mapping<t_bool>",
+          "valueType": "t_bool",
+          "label": "mapping(key => bool)",
+          "kind": "mapping"
+        },
+        "t_string": {
+          "id": "t_string",
+          "kind": "elementary",
+          "label": "string"
+        },
+        "t_uint8": {
+          "id": "t_uint8",
+          "kind": "elementary",
+          "label": "uint8"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 6849,
+          "type": "t_bool",
+          "src": "757:24:32"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 6851,
+          "type": "t_bool",
+          "src": "876:25:32"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 6913,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:32"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "_balances",
+          "astId": 6103,
+          "type": "t_mapping<t_uint256>",
+          "src": "1418:46:26"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "_allowances",
+          "astId": 6109,
+          "type": "t_mapping<t_uint256>",
+          "src": "1471:69:26"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "_totalSupply",
+          "astId": 6111,
+          "type": "t_uint256",
+          "src": "1547:28:26"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "______gap",
+          "astId": 6495,
+          "type": "t_array:50<t_uint256>",
+          "src": "8172:29:26"
+        },
+        {
+          "contract": "ERC20Burnable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Burnable.sol",
+          "label": "______gap",
+          "astId": 6536,
+          "type": "t_array:50<t_uint256>",
+          "src": "761:29:27"
+        },
+        {
+          "contract": "MinterRole",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\access\\roles\\MinterRole.sol",
+          "label": "_minters",
+          "astId": 5444,
+          "type": "t_struct<Roles.Role>",
+          "src": "327:27:21"
+        },
+        {
+          "contract": "MinterRole",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\access\\roles\\MinterRole.sol",
+          "label": "______gap",
+          "astId": 5544,
+          "type": "t_array:50<t_uint256>",
+          "src": "1193:29:21"
+        },
+        {
+          "contract": "ERC20Mintable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Mintable.sol",
+          "label": "______gap",
+          "astId": 6652,
+          "type": "t_array:50<t_uint256>",
+          "src": "831:29:29"
+        },
+        {
+          "contract": "PauserRole",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\access\\roles\\PauserRole.sol",
+          "label": "_pausers",
+          "astId": 5567,
+          "type": "t_struct<Roles.Role>",
+          "src": "327:27:22"
+        },
+        {
+          "contract": "PauserRole",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\access\\roles\\PauserRole.sol",
+          "label": "______gap",
+          "astId": 5667,
+          "type": "t_array:50<t_uint256>",
+          "src": "1193:29:22"
+        },
+        {
+          "contract": "Pausable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\lifecycle\\Pausable.sol",
+          "label": "_paused",
+          "astId": 5689,
+          "type": "t_bool",
+          "src": "909:20:23"
+        },
+        {
+          "contract": "Pausable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\lifecycle\\Pausable.sol",
+          "label": "______gap",
+          "astId": 5772,
+          "type": "t_array:50<t_uint256>",
+          "src": "2163:29:23"
+        },
+        {
+          "contract": "ERC20Pausable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Pausable.sol",
+          "label": "______gap",
+          "astId": 6775,
+          "type": "t_array:50<t_uint256>",
+          "src": "1371:29:30"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "_name",
+          "astId": 6547,
+          "type": "t_string",
+          "src": "224:20:28"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "_symbol",
+          "astId": 6549,
+          "type": "t_string",
+          "src": "250:22:28"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "_decimals",
+          "astId": 6551,
+          "type": "t_uint8",
+          "src": "278:23:28"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "______gap",
+          "astId": 6603,
+          "type": "t_array:50<t_uint256>",
+          "src": "1654:29:28"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "_owner",
+          "astId": 5970,
+          "type": "t_address",
+          "src": "526:22:25"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "______gap",
+          "astId": 6083,
+          "type": "t_array:50<t_uint256>",
+          "src": "2471:29:25"
+        },
+        {
+          "contract": "AskoToken",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "label": "taxBP",
+          "astId": 1360,
+          "type": "t_uint256",
+          "src": "950:17:2"
+        },
+        {
+          "contract": "AskoToken",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "label": "isTaxActive",
+          "astId": 1362,
+          "type": "t_bool",
+          "src": "974:23:2"
+        },
+        {
+          "contract": "AskoToken",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "label": "askoStaking",
+          "astId": 1364,
+          "type": "t_address",
+          "src": "1004:31:2"
+        },
+        {
+          "contract": "AskoToken",
+          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "label": "trustedContracts",
+          "astId": 1368,
+          "type": "t_mapping<t_bool>",
+          "src": "1042:49:2"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    }
+  },
+  "solidityLibs": {},
+  "proxies": {
+    "askonetwork-contracts/AskoToken": [
+      {
+        "address": "0x701FFac46A57a504b098010f1fC1D399711a78D1",
+        "version": "1.0.0",
+        "implementation": "0x0000000000000000000000000000000000000000",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      },
+      {
+        "address": "0xeEEE2a622330E6d2036691e983DEe87330588603",
+        "version": "1.0.0",
+        "implementation": "0x11c38e7b0224a17311c26FcaD590052592D689d1",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      }
+    ],
+    "askonetwork-contracts/AskoStaking": [
+      {
+        "address": "0xDca8a233224c69bDce5E2E41C292a39d4629145B",
+        "version": "1.0.0",
+        "implementation": "0xE1676411B677902A9c6eA46d61a398B374eCBc21",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      },
+      {
+        "address": "0xE346A9Fa3414645D4Ac383d47705B8f663A37B58",
+        "version": "1.0.0",
+        "implementation": "0xE1676411B677902A9c6eA46d61a398B374eCBc21",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      }
+    ],
+    "askonetwork-contracts/AskoPresale": [
+      {
+        "address": "0xa1021b1875944c76977898397A03D3b0f176f27C",
+        "version": "1.0.0",
+        "implementation": "0xBdA505100048E0574e3207F696199FE57D7a5032",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      }
+    ]
+  },
+  "manifestVersion": "2.2",
+  "version": "1.0.0",
+  "dependencies": {
+    "@openzeppelin/contracts-ethereum-package": {
+      "package": "0x778dddF23Ec1B5Cb18394c6C110480CaaDB3B0f6",
+      "version": "2.5.0"
+    }
+  },
+  "proxyAdmin": {
+    "address": "0x6b08825E47d22c6685efE6430819888f8159ffD8"
+  }
+}

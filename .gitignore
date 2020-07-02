@@ -7,6 +7,7 @@ build/contracts
 
 #secret mnemonic
 mnemonic.js
+privatekey.js
 
 # Logs
 logs

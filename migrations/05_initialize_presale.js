@@ -1,5 +1,6 @@
 const { scripts, ConfigManager } = require("@openzeppelin/cli")
 const { add, push, create } = scripts
+const {publicKey} = require("../privatekey")
 
 const config = require("../config")
 
@@ -7,8 +8,8 @@ const AskoToken = artifacts.require("AskoToken")
 const AskoStaking = artifacts.require("AskoStaking")
 const AskoPresale = artifacts.require("AskoPresale")
 
-async function initialize(accounts) {
-  const owner = accounts[0]
+async function initialize(accounts,networkName) {
+  let owner = accounts[0]
 
   const tokenParams =   config.AskoToken
   const stakingParams = config.AskoStaking
@@ -37,8 +38,7 @@ async function initialize(accounts) {
 
   await askoToken.mint(
     askoPresale.address,
-    presaleParams.totalPresaleTokens.add(presaleParams.totalUniswapTokens),
-    {from: owner}
+    presaleParams.totalPresaleTokens.add(presaleParams.totalUniswapTokens)
   )
 
   await askoPresale.initialize(
@@ -59,6 +59,6 @@ async function initialize(accounts) {
 
 module.exports = function(deployer, networkName, accounts) {
   deployer.then(async () => {
-    await initialize(accounts)
+    await initialize(accounts,networkName)
   })
 }

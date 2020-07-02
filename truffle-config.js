@@ -1,5 +1,5 @@
 const HDWalletProvider = require("@truffle/hdwallet-provider")
-const mnemonic = require("./mnemonic")
+const {privateKey, publicKey} = require("./privatekey")
 
 module.exports = {
   networks: {
@@ -8,11 +8,14 @@ module.exports = {
      port: 8545,
      network_id: "*",
     },
-    mainnet: {
+    live: {
       provider: function() {
-        return new HDWalletProvider(mnemonic, "https://mainnet.infura.io/v3/e88244aa5b1b4f19aa4b5045ba53b8b9")
+        return new HDWalletProvider(privateKey, "https://mainnet.infura.io/v3/e88244aa5b1b4f19aa4b5045ba53b8b9")
       },
-      network_id: 1
+      network_id: 1,
+      gasPrice: 41e9,
+      from: publicKey,
+      gas: 8000000
     }
   },
 
