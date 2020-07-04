@@ -744,7 +744,7 @@
         "address": "0xa1021b1875944c76977898397A03D3b0f176f27C",
         "version": "1.0.0",
         "implementation": "0xBdA505100048E0574e3207F696199FE57D7a5032",
-        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "admin": "0x000000000000000000000000000000000000dEaD",
         "kind": "Upgradeable"
       }
     ]

@@ -32,6 +32,7 @@ describe("AskoToken", function() {
     await this.askoStaking.initialize(
       stakingParams.stakingTaxBP,
       stakingParams.unstakingTaxBP,
+      stakingParams.startTime,
       owner,
       this.askoToken.address
     )

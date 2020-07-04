@@ -11,7 +11,8 @@ config.AskoToken = {
 
 config.AskoStaking = {
   stakingTaxBP: 100,
-  unstakingTaxBP: 100
+  unstakingTaxBP: 100,
+  startTime: 1593918000
 }
 
 config.AskoPresale = {
