@@ -21,15 +21,14 @@ contract AskoStaking is Initializable, Ownable {
     mapping(address => uint) public stakeValue;
     mapping(address => int) private stakerPayouts;
 
-    IStakeHandler[] public stakeHandlers;
-
-    uint public startTime;
-
     uint public totalDistributions;
     uint public totalStaked;
     uint public totalStakers;
     uint private profitPerShare;
     uint private emptyStakeTokens; //These are tokens given to the contract when there are no stakers.
+
+    IStakeHandler[] public stakeHandlers;
+    uint public startTime;
 
     event OnDistribute(address sender, uint amountSent);
     event OnStake(address sender, uint amount, uint tax);
@@ -43,21 +42,19 @@ contract AskoStaking is Initializable, Ownable {
     }
 
     modifier whenStakingActive {
-        require(now > startTime, "Staking not yet started.");
+        require(startTime != 0 && now > startTime, "Staking not yet started.");
         _;
     }
 
     function initialize(
         uint _stakingTaxBP,
         uint _ustakingTaxBP,
-        uint _startTime,
         address owner,
         IERC20 _askoToken
     ) public initializer {
         Ownable.initialize(msg.sender);
         stakingTaxBP = _stakingTaxBP;
         unstakingTaxBP = _ustakingTaxBP;
-        startTime = _startTime;
         askoToken = _askoToken;
         //Due to issue in oz testing suite, the msg.sender might not be owner
         _transferOwnership(owner);
@@ -153,6 +150,10 @@ contract AskoStaking is Initializable, Ownable {
     function setUnstakingBP(uint valueBP) public onlyOwner {
         require(valueBP < 10000, "Tax connot be over 100% (10000 BP)");
         unstakingTaxBP = valueBP;
+    }
+
+    function setStartTime(uint _startTime) public onlyOwner {
+        startTime = _startTime;
     }
 
     function uintToInt(uint val) internal pure returns (int) {

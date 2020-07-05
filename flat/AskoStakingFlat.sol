@@ -1,6 +1,3 @@
-
-// File: @openzeppelin\contracts-ethereum-package\contracts\math\SafeMath.sol
-
 pragma solidity ^0.5.0;
 
 /**
@@ -158,10 +155,6 @@ library SafeMath {
     }
 }
 
-// File: @openzeppelin\upgrades\contracts\Initializable.sol
-
-pragma solidity >=0.4.24 <0.7.0;
-
 
 /**
  * @title Initializable
@@ -223,10 +216,6 @@ contract Initializable {
   uint256[50] private ______gap;
 }
 
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\GSN\Context.sol
-
-pragma solidity ^0.5.0;
-
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -253,10 +242,6 @@ contract Context is Initializable {
         return msg.data;
     }
 }
-
-// File: @openzeppelin\contracts-ethereum-package\contracts\ownership\Ownable.sol
-
-pragma solidity ^0.5.0;
 
 
 
@@ -336,9 +321,6 @@ contract Ownable is Initializable, Context {
     uint256[50] private ______gap;
 }
 
-// File: @openzeppelin\contracts-ethereum-package\contracts\token\ERC20\IERC20.sol
-
-pragma solidity ^0.5.0;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
@@ -415,10 +397,6 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-// File: contracts\library\BasisPoints.sol
-
-pragma solidity 0.5.16;
-
 
 library BasisPoints {
     using SafeMath for uint;
@@ -443,9 +421,11 @@ library BasisPoints {
     }
 }
 
-// File: contracts\AskoStaking.sol
 
-pragma solidity 0.5.16;
+interface IStakeHandler {
+    function handleStake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external;
+    function handleUnstake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external;
+}
 
 
 contract AskoStaking is Initializable, Ownable {
@@ -467,6 +447,9 @@ contract AskoStaking is Initializable, Ownable {
     uint private profitPerShare;
     uint private emptyStakeTokens; //These are tokens given to the contract when there are no stakers.
 
+    IStakeHandler[] public stakeHandlers;
+    uint public startTime;
+
     event OnDistribute(address sender, uint amountSent);
     event OnStake(address sender, uint amount, uint tax);
     event OnUnstake(address sender, uint amount, uint tax);
@@ -478,7 +461,17 @@ contract AskoStaking is Initializable, Ownable {
         _;
     }
 
-    function initialize(uint _stakingTaxBP, uint _ustakingTaxBP, address owner, IERC20 _askoToken) public initializer {
+    modifier whenStakingActive {
+        require(startTime != 0 && now > startTime, "Staking not yet started.");
+        _;
+    }
+
+    function initialize(
+        uint _stakingTaxBP,
+        uint _ustakingTaxBP,
+        address owner,
+        IERC20 _askoToken
+    ) public initializer {
         Ownable.initialize(msg.sender);
         stakingTaxBP = _stakingTaxBP;
         unstakingTaxBP = _ustakingTaxBP;
@@ -487,7 +480,7 @@ contract AskoStaking is Initializable, Ownable {
         _transferOwnership(owner);
     }
 
-    function stake(uint amount) public {
+    function stake(uint amount) public whenStakingActive {
         require(amount >= 1e18, "Must stake at least one ASKO.");
         require(askoToken.balanceOf(msg.sender) >= amount, "Cannot stake more ASKO than you hold unstaked.");
         if (stakeValue[msg.sender] == 0) totalStakers = totalStakers.add(1);
@@ -496,7 +489,7 @@ contract AskoStaking is Initializable, Ownable {
         emit OnStake(msg.sender, amount, tax);
     }
 
-    function unstake(uint amount) public {
+    function unstake(uint amount) public whenStakingActive {
         require(amount >= 1e18, "Must unstake at least one ASKO.");
         require(stakeValue[msg.sender] >= amount, "Cannot unstake more ASKO than you have staked.");
         uint tax = findTaxAmount(amount, unstakingTaxBP);
@@ -506,19 +499,22 @@ contract AskoStaking is Initializable, Ownable {
         stakeValue[msg.sender] = stakeValue[msg.sender].sub(amount);
         uint payout = profitPerShare.mul(amount).add(tax.mul(DISTRIBUTION_MULTIPLIER));
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] - uintToInt(payout);
+        for (uint i=0; i < stakeHandlers.length; i++) {
+            stakeHandlers[i].handleUnstake(msg.sender, amount, stakeValue[msg.sender]);
+        }
         _increaseProfitPerShare(tax);
         require(askoToken.transferFrom(address(this), msg.sender, earnings), "Unstake failed due to failed transfer.");
         emit OnUnstake(msg.sender, amount, tax);
     }
 
-    function withdraw(uint amount) public {
+    function withdraw(uint amount) public whenStakingActive {
         require(dividendsOf(msg.sender) >= amount, "Cannot withdraw more dividends than you have earned.");
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(amount.mul(DISTRIBUTION_MULTIPLIER));
         askoToken.transfer(msg.sender, amount);
         emit OnWithdraw(msg.sender, amount);
     }
 
-    function reinvest(uint amount) public {
+    function reinvest(uint amount) public whenStakingActive {
         require(dividendsOf(msg.sender) >= amount, "Cannot reinvest more dividends than you have earned.");
         uint payout = amount.mul(DISTRIBUTION_MULTIPLIER);
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
@@ -552,6 +548,34 @@ contract AskoStaking is Initializable, Ownable {
         return value.mulBP(taxBP);
     }
 
+    function numberStakeHandlersRegistered() public view returns (uint) {
+        return stakeHandlers.length;
+    }
+
+    function registerStakeHandler(IStakeHandler sc) public onlyOwner {
+        stakeHandlers.push(sc);
+    }
+
+    function unregisterStakeHandler(uint index) public onlyOwner {
+        IStakeHandler sc = stakeHandlers[stakeHandlers.length-1];
+        stakeHandlers.pop();
+        stakeHandlers[index] = sc;
+    }
+
+    function setStakingBP(uint valueBP) public onlyOwner {
+        require(valueBP < 10000, "Tax connot be over 100% (10000 BP)");
+        stakingTaxBP = valueBP;
+    }
+
+    function setUnstakingBP(uint valueBP) public onlyOwner {
+        require(valueBP < 10000, "Tax connot be over 100% (10000 BP)");
+        unstakingTaxBP = valueBP;
+    }
+
+    function setStartTime(uint _startTime) public onlyOwner {
+        startTime = _startTime;
+    }
+
     function uintToInt(uint val) internal pure returns (int) {
         if (val >= uint(-1).div(2)) {
             require(false, "Overflow. Cannot convert uint to int.");
@@ -565,6 +589,9 @@ contract AskoStaking is Initializable, Ownable {
         uint stakeAmount = amount.sub(tax);
         totalStaked = totalStaked.add(stakeAmount);
         stakeValue[msg.sender] = stakeValue[msg.sender].add(stakeAmount);
+        for (uint i=0; i < stakeHandlers.length; i++) {
+            stakeHandlers[i].handleStake(msg.sender, stakeAmount, stakeValue[msg.sender]);
+        }
         uint payout = profitPerShare.mul(stakeAmount);
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
         _increaseProfitPerShare(tax);

@@ -32,10 +32,11 @@ describe("AskoStaking", function() {
     await this.askoStaking.initialize(
       stakingParams.stakingTaxBP,
       stakingParams.unstakingTaxBP,
-      stakingParams.startTime,
       owner,
       this.askoToken.address
     )
+
+    await this.askoStaking.setStartTime(stakingParams.startTime,{from:owner})
 
     await Promise.all([
       this.askoToken.mint(stakers[0],ether('25'),{from: owner}),

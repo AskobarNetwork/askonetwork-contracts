@@ -32,10 +32,11 @@ describe("AskoToken", function() {
     await this.askoStaking.initialize(
       stakingParams.stakingTaxBP,
       stakingParams.unstakingTaxBP,
-      stakingParams.startTime,
       owner,
       this.askoToken.address
     )
+
+    await this.askoStaking.setStartTime(new BN(1),{from:owner})
 
     await Promise.all([
       await this.askoToken.mint(transferFromAccounts[0],ether('10'),{from: owner}),
