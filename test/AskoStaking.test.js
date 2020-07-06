@@ -18,6 +18,10 @@ describe("AskoStaking", function() {
     const tokenParams = config.AskoToken
     const stakingParams = config.AskoStaking
 
+
+    await time.advanceBlock()
+    const latest = await time.latest()
+
     this.askoToken = await AskoToken.new()
     this.askoStaking = await AskoStaking.new()
 
@@ -36,7 +40,7 @@ describe("AskoStaking", function() {
       this.askoToken.address
     )
 
-    await this.askoStaking.setStartTime(stakingParams.startTime,{from:owner})
+    await this.askoStaking.setStartTime(latest.add(new BN(SECONDS_PER_DAY*1)),{from:owner})
 
     await Promise.all([
       this.askoToken.mint(stakers[0],ether('25'),{from: owner}),

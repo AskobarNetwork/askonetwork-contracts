@@ -25,6 +25,16 @@ config.AskoPresale = {
   totalUniswapTokens: ether("24000000")
 }
 
+config.AskoStakingRewardPool = {
+  releaseBP: 1000,
+  releaseInterval: 86400*30,
+  releaseStart: 1594215000
+}
+
+config.AskoPromoFund = {
+  size: ether("10000000")
+}
+
 config.Launch = {
   startTime: 1593696600
 }
