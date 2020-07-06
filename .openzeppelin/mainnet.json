@@ -753,6 +753,703 @@
         "hasInitialValuesInDeclarations": false,
         "uninitializedBaseContracts": []
       }
+    },
+    "AskoTeamLock": {
+      "address": "0xC540565759aba1c386039270cbEc8b7941995C50",
+      "constructorCode": "608060405234801561001057600080fd5b506108a3806100206000396000f3fe",
+      "bodyBytecodeHash": "d148317ac7296857f0660a1d820311b8e54f59ff0dafd1c0a16265f628795b40",
+      "localBytecodeHash": "3f9a600a59bf61a50054da24b233f54dbcdfa756c88f296e0c9d151578df3158",
+      "deployedBytecodeHash": "3f9a600a59bf61a50054da24b233f54dbcdfa756c88f296e0c9d151578df3158",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        },
+        "t_array:dyn<t_address>": {
+          "id": "t_array:dyn<t_address>",
+          "valueType": "t_address",
+          "length": "dyn",
+          "kind": "array",
+          "label": "address[]"
+        },
+        "t_mapping<t_uint256>": {
+          "id": "t_mapping<t_uint256>",
+          "valueType": "t_uint256",
+          "label": "mapping(key => uint256)",
+          "kind": "mapping"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 8266,
+          "type": "t_bool",
+          "src": "757:24:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 8268,
+          "type": "t_bool",
+          "src": "876:25:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 8330,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:37"
+        },
+        {
+          "contract": "AskoTeamLock",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoTeamLock.sol",
+          "label": "releaseInterval",
+          "astId": 2533,
+          "type": "t_uint256",
+          "src": "336:27:5"
+        },
+        {
+          "contract": "AskoTeamLock",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoTeamLock.sol",
+          "label": "releaseStart",
+          "astId": 2535,
+          "type": "t_uint256",
+          "src": "370:24:5"
+        },
+        {
+          "contract": "AskoTeamLock",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoTeamLock.sol",
+          "label": "releaseAmount",
+          "astId": 2537,
+          "type": "t_uint256",
+          "src": "401:25:5"
+        },
+        {
+          "contract": "AskoTeamLock",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoTeamLock.sol",
+          "label": "askoToken",
+          "astId": 2539,
+          "type": "t_address",
+          "src": "433:24:5"
+        },
+        {
+          "contract": "AskoTeamLock",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoTeamLock.sol",
+          "label": "teamMembers",
+          "astId": 2542,
+          "type": "t_array:dyn<t_address>",
+          "src": "464:28:5"
+        },
+        {
+          "contract": "AskoTeamLock",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoTeamLock.sol",
+          "label": "teamMemberClaimed",
+          "astId": 2546,
+          "type": "t_mapping<t_uint256>",
+          "src": "501:49:5"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    },
+    "AskoDevFund": {
+      "address": "0xFa51Aa3bBC131Ce3F63cCd2969A3F039b416db43",
+      "constructorCode": "608060405234801561001057600080fd5b50610b81806100206000396000f3fe",
+      "bodyBytecodeHash": "d4463aec52f1cf74f674393b67fb86183a0a3dac12cc98815ecc46a224f23993",
+      "localBytecodeHash": "332d26e100cd126c49a80964f45b9ac07de67ccd4b10134a0260639c8040ffb7",
+      "deployedBytecodeHash": "332d26e100cd126c49a80964f45b9ac07de67ccd4b10134a0260639c8040ffb7",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 8266,
+          "type": "t_bool",
+          "src": "757:24:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 8268,
+          "type": "t_bool",
+          "src": "876:25:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 8330,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:37"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaseInterval",
+          "astId": 15,
+          "type": "t_uint256",
+          "src": "542:27:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaseStart",
+          "astId": 17,
+          "type": "t_uint256",
+          "src": "576:24:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaseAmount",
+          "astId": 19,
+          "type": "t_uint256",
+          "src": "607:25:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "askoToken",
+          "astId": 21,
+          "type": "t_address",
+          "src": "641:24:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "askoStaking",
+          "astId": 23,
+          "type": "t_address",
+          "src": "672:31:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "authorizor",
+          "astId": 25,
+          "type": "t_address",
+          "src": "712:25:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaser",
+          "astId": 27,
+          "type": "t_address",
+          "src": "744:23:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "totalAuthorized",
+          "astId": 29,
+          "type": "t_uint256",
+          "src": "776:27:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "totalReleased",
+          "astId": 31,
+          "type": "t_uint256",
+          "src": "810:25:0"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    },
+    "AskoPromoFund": {
+      "address": "0x2E8c8fADbffe5a2BC3e89a7c6BA19AFe57Bc0d93",
+      "constructorCode": "608060405234801561001057600080fd5b50610646806100206000396000f3fe",
+      "bodyBytecodeHash": "7ed62cf59d70cece850458dc702abbb06cffc6357f5de5f770faadc0a9285ce6",
+      "localBytecodeHash": "08e49d8f8137b6d9094780f48e537f5d331748e2b5e8701c764038049ba9ae5b",
+      "deployedBytecodeHash": "08e49d8f8137b6d9094780f48e537f5d331748e2b5e8701c764038049ba9ae5b",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 8266,
+          "type": "t_bool",
+          "src": "757:24:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 8268,
+          "type": "t_bool",
+          "src": "876:25:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 8330,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:37"
+        },
+        {
+          "contract": "AskoPromoFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPromoFund.sol",
+          "label": "askoToken",
+          "astId": 939,
+          "type": "t_address",
+          "src": "515:24:2"
+        },
+        {
+          "contract": "AskoPromoFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPromoFund.sol",
+          "label": "authorizor",
+          "astId": 941,
+          "type": "t_address",
+          "src": "546:25:2"
+        },
+        {
+          "contract": "AskoPromoFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPromoFund.sol",
+          "label": "releaser",
+          "astId": 943,
+          "type": "t_address",
+          "src": "578:23:2"
+        },
+        {
+          "contract": "AskoPromoFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPromoFund.sol",
+          "label": "totalAuthorized",
+          "astId": 945,
+          "type": "t_uint256",
+          "src": "610:27:2"
+        },
+        {
+          "contract": "AskoPromoFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPromoFund.sol",
+          "label": "totalReleased",
+          "astId": 947,
+          "type": "t_uint256",
+          "src": "644:25:2"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    },
+    "AskoDevfund": {
+      "address": "0x660edD1600c8e37910Cc243D8b7581cA084F897b",
+      "constructorCode": "608060405234801561001057600080fd5b50610b81806100206000396000f3fe",
+      "bodyBytecodeHash": "d4463aec52f1cf74f674393b67fb86183a0a3dac12cc98815ecc46a224f23993",
+      "localBytecodeHash": "332d26e100cd126c49a80964f45b9ac07de67ccd4b10134a0260639c8040ffb7",
+      "deployedBytecodeHash": "332d26e100cd126c49a80964f45b9ac07de67ccd4b10134a0260639c8040ffb7",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 8266,
+          "type": "t_bool",
+          "src": "757:24:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 8268,
+          "type": "t_bool",
+          "src": "876:25:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 8330,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:37"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaseInterval",
+          "astId": 15,
+          "type": "t_uint256",
+          "src": "542:27:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaseStart",
+          "astId": 17,
+          "type": "t_uint256",
+          "src": "576:24:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaseAmount",
+          "astId": 19,
+          "type": "t_uint256",
+          "src": "607:25:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "askoToken",
+          "astId": 21,
+          "type": "t_address",
+          "src": "641:24:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "askoStaking",
+          "astId": 23,
+          "type": "t_address",
+          "src": "672:31:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "authorizor",
+          "astId": 25,
+          "type": "t_address",
+          "src": "712:25:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "releaser",
+          "astId": 27,
+          "type": "t_address",
+          "src": "744:23:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "totalAuthorized",
+          "astId": 29,
+          "type": "t_uint256",
+          "src": "776:27:0"
+        },
+        {
+          "contract": "AskoDevFund",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoDevfund.sol",
+          "label": "totalReleased",
+          "astId": 31,
+          "type": "t_uint256",
+          "src": "810:25:0"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    },
+    "AskoStakingRewardPool": {
+      "address": "0xE50614BDA48d809a221e42F898362689Df9519fB",
+      "constructorCode": "60806040526118bb806100136000396000f3fe",
+      "bodyBytecodeHash": "de660fa0f4b1a0ff429ac4105b7fde1f04a4324f40ef2f0afcd712aae86de712",
+      "localBytecodeHash": "b8d641c0e643ca3a9cd24ed4fd5c74a2f93a4f8068718fdafe9a4bff79a9a30b",
+      "deployedBytecodeHash": "b8d641c0e643ca3a9cd24ed4fd5c74a2f93a4f8068718fdafe9a4bff79a9a30b",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        },
+        "t_mapping<t_bool>": {
+          "id": "t_mapping<t_bool>",
+          "valueType": "t_bool",
+          "label": "mapping(key => bool)",
+          "kind": "mapping"
+        },
+        "t_mapping<t_uint256>": {
+          "id": "t_mapping<t_uint256>",
+          "valueType": "t_uint256",
+          "label": "mapping(key => uint256)",
+          "kind": "mapping"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 8266,
+          "type": "t_bool",
+          "src": "757:24:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 8268,
+          "type": "t_bool",
+          "src": "876:25:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 8330,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:37"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "_owner",
+          "astId": 7387,
+          "type": "t_address",
+          "src": "526:22:30"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "______gap",
+          "astId": 7500,
+          "type": "t_array:50<t_uint256>",
+          "src": "2471:29:30"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "releaseBP",
+          "astId": 1916,
+          "type": "t_uint256",
+          "src": "594:21:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "releaseInterval",
+          "astId": 1918,
+          "type": "t_uint256",
+          "src": "622:27:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "releaseStart",
+          "astId": 1920,
+          "type": "t_uint256",
+          "src": "656:24:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "askoToken",
+          "astId": 1922,
+          "type": "t_address",
+          "src": "687:24:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "askoStaking",
+          "astId": 1924,
+          "type": "t_address",
+          "src": "718:31:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "isRegistrationEnabled",
+          "astId": 1926,
+          "type": "t_bool",
+          "src": "758:26:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "registeredStakers",
+          "astId": 1930,
+          "type": "t_mapping<t_bool>",
+          "src": "793:49:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "cycleRegistrantAmount",
+          "astId": 1936,
+          "type": "t_mapping<t_uint256>",
+          "src": "849:68:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "cycleRegistrantClaimed",
+          "astId": 1942,
+          "type": "t_mapping<t_uint256>",
+          "src": "924:69:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "cycleTotalRegistered",
+          "astId": 1946,
+          "type": "t_mapping<t_uint256>",
+          "src": "1000:49:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "reservedForClaims",
+          "astId": 1948,
+          "type": "t_uint256",
+          "src": "1058:29:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "lastCycleSetReservedForClaims",
+          "astId": 1950,
+          "type": "t_uint256",
+          "src": "1094:41:4"
+        },
+        {
+          "contract": "AskoStakingRewardPool",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+          "label": "cycleTotalReservations",
+          "astId": 1954,
+          "type": "t_mapping<t_uint256>",
+          "src": "1142:51:4"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
     }
   },
   "solidityLibs": {},
@@ -795,6 +1492,15 @@
         "version": "1.0.0",
         "implementation": "0xBdA505100048E0574e3207F696199FE57D7a5032",
         "admin": "0x000000000000000000000000000000000000dEaD",
+        "kind": "Upgradeable"
+      }
+    ],
+    "askonetwork-contracts/AskoDevfund": [
+      {
+        "address": "0xB33F2f17Eb9aF9309CCbd31D6941Ef15268C9E7B",
+        "version": "1.0.0",
+        "implementation": "0x660edD1600c8e37910Cc243D8b7581cA084F897b",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
         "kind": "Upgradeable"
       }
     ]

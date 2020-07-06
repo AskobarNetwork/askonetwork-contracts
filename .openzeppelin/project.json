@@ -3,7 +3,12 @@
   "contracts": {
     "AskoStaking": "AskoStaking",
     "AskoToken": "AskoToken",
-    "AskoPresale": "AskoPresale"
+    "AskoPresale": "AskoPresale",
+    "AskoDevFund": "AskoDevFund",
+    "AskoPromoFund": "AskoPromoFund",
+    "AskoStakingRewardPool": "AskoStakingRewardPool",
+    "AskoTeamLock": "AskoTeamLock",
+    "AskoDevfund": "AskoDevfund"
   },
   "dependencies": {
     "@openzeppelin/contracts-ethereum-package": "^2.5.0"

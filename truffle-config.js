@@ -15,7 +15,7 @@ module.exports = {
       network_id: 1,
       gasPrice: 41e9,
       from: publicKey,
-      gas: 8000000
+      gas: 8e6
     }
   },
 

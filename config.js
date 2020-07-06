@@ -33,7 +33,9 @@ config.AskoStakingRewardPool = {
 }
 
 config.AskoPromoFund = {
-  size: ether("10000000")
+  size: ether("10000000"),
+  authorizor: "0xF142e06408972508619ee93C2b8bff15ef7c2cb3",
+  releaser: "0xd04371F7b83a317Ff92DF60915Ca1C7037a01a4c"
 }
 
 config.AskoTeamLock = {
@@ -53,7 +55,9 @@ config.AskoDevFund = {
   releaseAmount:ether("2500000"),
   releaseInterval:86400*30,
   releaseStart:1593955800,
-  size: ether("30000000")
+  size: ether("30000000"),
+  authorizor: "0xF142e06408972508619ee93C2b8bff15ef7c2cb3",
+  releaser: "0xd04371F7b83a317Ff92DF60915Ca1C7037a01a4c"
 }
 
 config.Launch = {
