@@ -58,7 +58,7 @@ describe("AskoStakingRewardPool", function() {
     describe("#handleStake", function(){
       it("Should revert", async function() {
         const staker = registeredStakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStakingRewardPool.handleStake(staker,"100","100",{from:staker}),
           "Sender must be AskoStaking sc."
         )
@@ -67,7 +67,7 @@ describe("AskoStakingRewardPool", function() {
     describe("#handleUnstake", function(){
       it("Should revert", async function() {
         const staker = registeredStakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStakingRewardPool.handleUnstake(staker,"100","100",{from:staker}),
           "Sender must be AskoStaking sc."
         )
@@ -76,7 +76,7 @@ describe("AskoStakingRewardPool", function() {
     describe("#register", function(){
       it("Should revert", async function() {
         const staker = registeredStakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStakingRewardPool.register({from:staker}),
           "Registration not enabled"
         )
@@ -88,7 +88,7 @@ describe("AskoStakingRewardPool", function() {
     describe("#claim", function(){
       it("Should revert", async function() {
         const staker = registeredStakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStakingRewardPool.claim({from:staker}),
           "Has not yet started."
         )

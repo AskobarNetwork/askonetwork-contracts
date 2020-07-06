@@ -67,7 +67,7 @@ describe("AskoStaking", function() {
     describe("#stake", function(){
       it("Should revert", async function() {
         const staker = stakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStaking.stake(ether("1"),{from:staker}),
           "Staking not yet started."
         )
@@ -76,7 +76,7 @@ describe("AskoStaking", function() {
     describe("#unstake", function(){
       it("Should revert", async function() {
         const staker = stakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStaking.unstake(ether("1"),{from:staker}),
           "Staking not yet started."
         )
@@ -85,7 +85,7 @@ describe("AskoStaking", function() {
     describe("#withdraw", function(){
       it("Should revert", async function() {
         const staker = stakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStaking.withdraw(ether("1"),{from:staker}),
           "Staking not yet started."
         )
@@ -94,7 +94,7 @@ describe("AskoStaking", function() {
     describe("#reinvest", function(){
       it("Should revert", async function() {
         const staker = stakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStaking.reinvest(ether("1"),{from:staker}),
           "Staking not yet started."
         )
@@ -113,15 +113,15 @@ describe("AskoStaking", function() {
     describe("#stake", function(){
       it("Should revert if less than 1 token", async function() {
         const staker = stakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStaking.stake(ether("1").sub(new BN(1)),{from:staker}),
           "Must stake at least one ASKO."
         )
-        expectRevert(
+        await expectRevert(
           this.askoStaking.stake(0,{from:staker}),
           "Must stake at least one ASKO."
         )
-        expectRevert(
+        await expectRevert(
           this.askoStaking.stake(new BN(1),{from:staker}),
           "Must stake at least one ASKO."
         )
@@ -138,11 +138,11 @@ describe("AskoStaking", function() {
         const staker = stakers[0]
         const balance = await this.askoToken.balanceOf(staker)
         expect(balance.toString()).to.not.equal(new BN(0),{from:staker})
-        expectRevert(
+        await expectRevert(
           this.askoStaking.stake(balance.add(new BN(1)),{from:staker}),
           "Cannot stake more ASKO than you hold unstaked."
         )
-        expectRevert(
+        await expectRevert(
           this.askoStaking.stake(balance.add(ether("1000000000")),{from:staker}),
           "Cannot stake more ASKO than you hold unstaked."
         )
@@ -232,15 +232,15 @@ describe("AskoStaking", function() {
     describe("#unstake", function(){
       it("Should revert if less than 1 token", async function() {
         const staker = stakers[0]
-        expectRevert(
+        await expectRevert(
           this.askoStaking.unstake(ether("1").sub(new BN(1)),{from:staker}),
           "Must unstake at least one ASKO."
         )
-        expectRevert(
+        await expectRevert(
           this.askoStaking.unstake(0,{from:staker}),
           "Must unstake at least one ASKO."
         )
-        expectRevert(
+        await expectRevert(
           this.askoStaking.unstake(new BN(1),{from:staker}),
           "Must unstake at least one ASKO."
         )
@@ -249,11 +249,11 @@ describe("AskoStaking", function() {
         const staker = stakers[0]
         const balance = await this.askoStaking.stakeValue(staker)
         expect(balance.toString()).to.not.equal(new BN(0),{from:staker})
-        expectRevert(
+        await expectRevert(
           this.askoStaking.unstake(balance.add(new BN(1)),{from:staker}),
           "Cannot unstake more ASKO than you have staked."
         )
-        expectRevert(
+        await expectRevert(
           this.askoStaking.unstake(balance.add(ether("1000000000")),{from:staker}),
           "Cannot unstake more ASKO than you have staked."
         )
@@ -330,7 +330,7 @@ describe("AskoStaking", function() {
       })
       it("Should revert if distributing more than sender's balance", async function() {
         const balance = await this.askoToken.balanceOf(distributionAccount)
-        expectRevert(
+        await expectRevert(
           this.askoStaking.distribute(balance.add(new BN(1)),{from: distributionAccount}),
           "Cannot distribute more ASKO than you hold unstaked."
         )
@@ -359,7 +359,7 @@ describe("AskoStaking", function() {
       it("Should revert if withdrawing more than sender's dividends", async function() {
         const staker = stakers[0]
         const balance = await this.askoStaking.dividendsOf(staker)
-        expectRevert(
+        await expectRevert(
           this.askoStaking.withdraw(balance.add(new BN(1)),{from: staker}),
           "Cannot withdraw more dividends than you have earned."
         )
@@ -389,11 +389,11 @@ describe("AskoStaking", function() {
         const staker = stakers[1]
         const divis = await this.askoStaking.dividendsOf(staker)
         expect(divis.toString()).to.not.equal(new BN(0),{from:staker})
-        expectRevert(
+        await expectRevert(
           this.askoStaking.reinvest(divis.add(new BN(1)),{from:staker}),
           "Cannot reinvest more dividends than you have earned."
         )
-        expectRevert(
+        await expectRevert(
           this.askoStaking.reinvest(divis.add(ether("1000000000")),{from:staker}),
           "Cannot reinvest more dividends than you have earned."
         )

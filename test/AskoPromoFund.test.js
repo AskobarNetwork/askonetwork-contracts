@@ -49,13 +49,13 @@ describe("AskoPromoFund", function() {
   describe("State: No Authorization", function() {
     describe("#releaseToAddress", function(){
       it("Should revert when called by releaser", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoPromoFund.releaseToAddress(receiver,"100",{from:releaser}),
          "Cannot release more than available."
         )
       })
       it("Should revert when called by nonreleaser", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoPromoFund.releaseToAddress(receiver,"100",{from:unauthorized}),
          "Can only be called releaser."
         )
@@ -65,7 +65,7 @@ describe("AskoPromoFund", function() {
   describe("State: Authorized", function() {
     describe("#authorize", function (){
       it("Should revert when called by unauthorized", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoPromoFund.authorize(ether("100"),{from:unauthorized}),
          "Can only be called authorizor."
         )
@@ -81,13 +81,13 @@ describe("AskoPromoFund", function() {
     })
     describe("#releaseToAddress", function(){
       it("Should revert when called by nonreleaser", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoPromoFund.releaseToAddress(receiver,ether("20"),{from:unauthorized}),
          "Can only be called releaser."
         )
       })
       it("Should revert if value too high.", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoPromoFund.releaseToAddress(receiver,ether("120"),{from:releaser}),
          "Cannot release more than available."
         )
@@ -105,7 +105,7 @@ describe("AskoPromoFund", function() {
           expect(ether("50").toString()).to.equal(totalReleased.toString())
         })
         it("Should revert if value too high.", async function() {
-          expectRevert(
+          await expectRevert(
             this.askoPromoFund.releaseToAddress(receiver,ether("60"),{from:releaser}),
            "Cannot release more than available."
           )

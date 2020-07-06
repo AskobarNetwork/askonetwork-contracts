@@ -60,7 +60,7 @@ describe("AskoTeamLock", function() {
     })
     describe("#claim", function(){
       it("Should revert when called by unauthorized", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoTeamLock.claim({from:unauthorized}),
          "Can only be called by team members."
         )
@@ -96,7 +96,7 @@ describe("AskoTeamLock", function() {
     })
     describe("#claim", function(){
       it("Should revert when called by unauthorized", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoTeamLock.claim({from:unauthorized}),
          "Can only be called by team members."
         )
@@ -134,7 +134,7 @@ describe("AskoTeamLock", function() {
     })
     describe("#claim", function(){
       it("Should revert when called by unauthorized", async function() {
-        expectRevert(
+        await expectRevert(
           this.askoTeamLock.claim({from:unauthorized}),
          "Can only be called by team members."
         )
