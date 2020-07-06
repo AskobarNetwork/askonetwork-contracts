@@ -35,6 +35,19 @@ config.AskoPromoFund = {
   size: ether("10000000")
 }
 
+config.AskoTeamLock = {
+  releaseAmount:ether("2500000"),
+  releaseInterval:86400*30,
+  releaseStart:1593955800,
+  teamMembers:[
+    "0xd04371F7b83a317Ff92DF60915Ca1C7037a01a4c",
+    "0x4771a883088CD7BEae45f7d84CFbFDCF18f726c5",
+    "0xFD9fc91e1Bc8fBBa21ef3EbFd07EAB1247aF8B41",
+    "0xF142e06408972508619ee93C2b8bff15ef7c2cb3"
+  ],
+  size: ether("10000000")
+}
+
 config.Launch = {
   startTime: 1593696600
 }

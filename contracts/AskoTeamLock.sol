@@ -25,6 +25,7 @@ contract AskoTeamLock is Initializable {
         uint _releaseAmount,
         uint _releaseInterval,
         uint _releaseStart,
+        address[] memory _teamMembers,
         IERC20 _askoToken
     ) public initializer {
         releaseAmount = _releaseAmount;
@@ -32,13 +33,12 @@ contract AskoTeamLock is Initializable {
         releaseStart = _releaseStart;
         askoToken = _askoToken;
 
-        teamMembers.push(0xd04371F7b83a317Ff92DF60915Ca1C7037a01a4c);
-        teamMembers.push(0x4771a883088CD7BEae45f7d84CFbFDCF18f726c5);
-        teamMembers.push(0xFD9fc91e1Bc8fBBa21ef3EbFd07EAB1247aF8B41);
-        teamMembers.push(0xF142e06408972508619ee93C2b8bff15ef7c2cb3);
+        for (uint i = 0; i < _teamMembers.length; i++) {
+            teamMembers.push(_teamMembers[i]);
+        }
     }
 
-    function claim() public returns(uint) {
+    function claim() public {
         require(checkIfTeamMember(msg.sender), "Can only be called by team members.");
         uint cycle = getCurrentCycleCount();
         uint totalClaimAmount = cycle.mul(releaseAmount);
