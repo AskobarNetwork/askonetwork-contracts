@@ -85,7 +85,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "maxBuyPerAddress",
           "astId": 19,
           "type": "t_uint256",
@@ -93,7 +93,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "maximumPresaleEther",
           "astId": 21,
           "type": "t_uint256",
@@ -101,7 +101,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "totalPresaleEther",
           "astId": 23,
           "type": "t_uint256",
@@ -109,7 +109,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "totalPresaleTokens",
           "astId": 25,
           "type": "t_uint256",
@@ -117,7 +117,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "totalUniswapTokens",
           "astId": 27,
           "type": "t_uint256",
@@ -125,7 +125,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "etherPoolDevfund",
           "astId": 29,
           "type": "t_uint256",
@@ -133,7 +133,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "etherPoolBuyback",
           "astId": 31,
           "type": "t_uint256",
@@ -141,7 +141,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "etherPoolUniswap",
           "astId": 33,
           "type": "t_uint256",
@@ -149,7 +149,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "buybackBP",
           "astId": 35,
           "type": "t_uint256",
@@ -157,7 +157,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "devfundBP",
           "astId": 37,
           "type": "t_uint256",
@@ -165,7 +165,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "startTime",
           "astId": 39,
           "type": "t_uint256",
@@ -173,7 +173,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "endTime",
           "astId": 41,
           "type": "t_uint256",
@@ -181,7 +181,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "isClosedByOwner",
           "astId": 43,
           "type": "t_bool",
@@ -189,7 +189,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "requiresWhitelisting",
           "astId": 45,
           "type": "t_bool",
@@ -197,7 +197,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "hasSentToUniswap",
           "astId": 47,
           "type": "t_bool",
@@ -205,7 +205,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "askoToken",
           "astId": 49,
           "type": "t_address",
@@ -213,7 +213,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "uniswapRouter",
           "astId": 51,
           "type": "t_address",
@@ -221,7 +221,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "depositAccounts",
           "astId": 55,
           "type": "t_mapping<t_uint256>",
@@ -229,7 +229,7 @@
         },
         {
           "contract": "AskoPresale",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoPresale.sol",
           "label": "whitelist",
           "astId": 59,
           "type": "t_mapping<t_bool>",
@@ -341,7 +341,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "stakingTaxBP",
           "astId": 679,
           "type": "t_uint256",
@@ -349,7 +349,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "unstakingTaxBP",
           "astId": 681,
           "type": "t_uint256",
@@ -357,7 +357,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "askoToken",
           "astId": 683,
           "type": "t_address",
@@ -365,7 +365,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "stakeValue",
           "astId": 687,
           "type": "t_mapping<t_uint256>",
@@ -373,7 +373,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "stakerPayouts",
           "astId": 691,
           "type": "t_mapping<t_int256>",
@@ -381,7 +381,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "totalDistributions",
           "astId": 693,
           "type": "t_uint256",
@@ -389,7 +389,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "totalStaked",
           "astId": 695,
           "type": "t_uint256",
@@ -397,7 +397,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "totalStakers",
           "astId": 697,
           "type": "t_uint256",
@@ -405,7 +405,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "profitPerShare",
           "astId": 699,
           "type": "t_uint256",
@@ -413,7 +413,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "emptyStakeTokens",
           "astId": 701,
           "type": "t_uint256",
@@ -421,7 +421,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "stakeHandlers",
           "astId": 704,
           "type": "t_array:dyn<t_address>",
@@ -429,7 +429,7 @@
         },
         {
           "contract": "AskoStaking",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
           "label": "startTime",
           "astId": 706,
           "type": "t_uint256",
@@ -449,7 +449,7 @@
             "updated": {
               "index": 15,
               "contract": "AskoStaking",
-              "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+              "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
               "label": "stakeHandlers",
               "astId": 704,
               "type": "t_array:dyn<t_address>",
@@ -461,7 +461,7 @@
             "updated": {
               "index": 16,
               "contract": "AskoStaking",
-              "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
+              "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStaking.sol",
               "label": "startTime",
               "astId": 706,
               "type": "t_uint256",
@@ -715,7 +715,7 @@
         },
         {
           "contract": "AskoToken",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
           "label": "taxBP",
           "astId": 1360,
           "type": "t_uint256",
@@ -723,7 +723,7 @@
         },
         {
           "contract": "AskoToken",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
           "label": "isTaxActive",
           "astId": 1362,
           "type": "t_bool",
@@ -731,7 +731,7 @@
         },
         {
           "contract": "AskoToken",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
           "label": "askoStaking",
           "astId": 1364,
           "type": "t_address",
@@ -739,7 +739,7 @@
         },
         {
           "contract": "AskoToken",
-          "path": "..\\..\\..\\D\\Mega\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
+          "path": "..\\..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoToken.sol",
           "label": "trustedContracts",
           "astId": 1368,
           "type": "t_mapping<t_bool>",
