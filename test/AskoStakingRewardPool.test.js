@@ -89,8 +89,8 @@ describe("AskoStakingRewardPool", function() {
       it("Should revert", async function() {
         const staker = registeredStakers[0]
         await expectRevert(
-          this.askoStakingRewardPool.claim({from:staker}),
-          "Has not yet started."
+          this.askoStakingRewardPool.claim("1",{from:staker}),
+           "Has not yet started."
         )
       })
     })
