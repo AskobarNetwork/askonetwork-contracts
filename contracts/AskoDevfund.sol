@@ -60,16 +60,25 @@ contract AskoDevFund is Initializable {
         askoToken.transfer(receiver, amount);
     }
 
-    function releaseToStakers(address receiver, uint amount) public returns(uint) {
+    function releaseToStakers(uint amount) public returns(uint) {
         requireValidRelease(amount);
         totalReleased = totalReleased.add(amount);
-        askoToken.transfer(receiver, amount);
+        askoStaking.distribute(amount);
+    }
+
+    function releaseToBurn(uint amount) public returns(uint) {
+        requireValidRelease(amount);
+        totalReleased = totalReleased.add(amount);
+        askoToken.transfer(0x000000000000000000000000000000000000dEaD, amount);
     }
 
     function authorize(uint amount) public returns (uint) {
         require(msg.sender == authorizor, "Sender is not authorizor.");
         uint maxAuthorizable = getCurrentCycleCount().mul(releaseAmount);
-        require(amount <= maxAuthorizable, "Cannot authorize more than the maximum authorizable.");
+        require(
+            amount.add(totalAuthorized) <= maxAuthorizable,
+            "Cannot authorize more than the maximum authorizable."
+        );
         totalAuthorized = totalAuthorized.add(amount);
     }
 
@@ -80,6 +89,7 @@ contract AskoDevFund is Initializable {
 
     function requireValidRelease(uint amount) public view {
         require(msg.sender == releaser, "Sender is not releaser.");
+        require(amount <= totalAuthorized, "Cannot release more than has been ever authorized.");
         require(amount <= totalAuthorized.sub(amount), "Cannot release more than available.");
     }
 

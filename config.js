@@ -28,7 +28,8 @@ config.AskoPresale = {
 config.AskoStakingRewardPool = {
   releaseBP: 1000,
   releaseInterval: 86400*30,
-  releaseStart: 1594215000
+  releaseStart: 1594215000,
+  size: ether("26000000")
 }
 
 config.AskoPromoFund = {
@@ -46,6 +47,13 @@ config.AskoTeamLock = {
     "0xF142e06408972508619ee93C2b8bff15ef7c2cb3"
   ],
   size: ether("10000000")
+}
+
+config.AskoDevFund = {
+  releaseAmount:ether("2500000"),
+  releaseInterval:86400*30,
+  releaseStart:1593955800,
+  size: ether("30000000")
 }
 
 config.Launch = {
