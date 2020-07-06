@@ -67,10 +67,7 @@ describe("AskoTeamLock", function() {
       })
       it("Should not change receiver balance.", async function() {
         const receiver = team[0]
-        console.log(team)
-        console.log(team[0])
         let first = await this.askoTeamLock.teamMembers[0]
-        console.log(first)
         await this.askoTeamLock.claim({from:receiver})
         const bal = await this.askoToken.balanceOf(receiver);
         expect(ether("0").toString()).to.equal(bal.toString())
