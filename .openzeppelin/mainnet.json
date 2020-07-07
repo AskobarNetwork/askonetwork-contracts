@@ -755,11 +755,11 @@
       }
     },
     "AskoTeamLock": {
-      "address": "0xC540565759aba1c386039270cbEc8b7941995C50",
-      "constructorCode": "608060405234801561001057600080fd5b506108a3806100206000396000f3fe",
-      "bodyBytecodeHash": "d148317ac7296857f0660a1d820311b8e54f59ff0dafd1c0a16265f628795b40",
-      "localBytecodeHash": "3f9a600a59bf61a50054da24b233f54dbcdfa756c88f296e0c9d151578df3158",
-      "deployedBytecodeHash": "3f9a600a59bf61a50054da24b233f54dbcdfa756c88f296e0c9d151578df3158",
+      "address": "0x8Dd4B9c337fAfB5aE3DC52c3be95C9a96eE62567",
+      "constructorCode": "608060405234801561001057600080fd5b50610d57806100206000396000f3fe",
+      "bodyBytecodeHash": "1ae3599813c615c7bcfeebdbb34ddcb43e030c59686ed4798509063499c2c814",
+      "localBytecodeHash": "92eb8e0b01090d93b49d5d6614145c1068e92b1850ad4480bc499aa5e44e4e82",
+      "deployedBytecodeHash": "92eb8e0b01090d93b49d5d6614145c1068e92b1850ad4480bc499aa5e44e4e82",
       "types": {
         "t_bool": {
           "id": "t_bool",
@@ -802,7 +802,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initialized",
-          "astId": 8266,
+          "astId": 8362,
           "type": "t_bool",
           "src": "757:24:37"
         },
@@ -810,7 +810,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initializing",
-          "astId": 8268,
+          "astId": 8364,
           "type": "t_bool",
           "src": "876:25:37"
         },
@@ -818,7 +818,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "______gap",
-          "astId": 8330,
+          "astId": 8426,
           "type": "t_array:50<t_uint256>",
           "src": "1982:29:37"
         },
@@ -828,7 +828,7 @@
           "label": "releaseInterval",
           "astId": 2533,
           "type": "t_uint256",
-          "src": "336:27:5"
+          "src": "343:27:5"
         },
         {
           "contract": "AskoTeamLock",
@@ -836,7 +836,7 @@
           "label": "releaseStart",
           "astId": 2535,
           "type": "t_uint256",
-          "src": "370:24:5"
+          "src": "377:24:5"
         },
         {
           "contract": "AskoTeamLock",
@@ -844,7 +844,7 @@
           "label": "releaseAmount",
           "astId": 2537,
           "type": "t_uint256",
-          "src": "401:25:5"
+          "src": "408:25:5"
         },
         {
           "contract": "AskoTeamLock",
@@ -852,7 +852,7 @@
           "label": "askoToken",
           "astId": 2539,
           "type": "t_address",
-          "src": "433:24:5"
+          "src": "440:31:5"
         },
         {
           "contract": "AskoTeamLock",
@@ -860,7 +860,7 @@
           "label": "teamMembers",
           "astId": 2542,
           "type": "t_array:dyn<t_address>",
-          "src": "464:28:5"
+          "src": "478:28:5"
         },
         {
           "contract": "AskoTeamLock",
@@ -868,7 +868,15 @@
           "label": "teamMemberClaimed",
           "astId": 2546,
           "type": "t_mapping<t_uint256>",
-          "src": "501:49:5"
+          "src": "517:49:5"
+        },
+        {
+          "contract": "AskoTeamLock",
+          "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoTeamLock.sol",
+          "label": "owner",
+          "astId": 2548,
+          "type": "t_address",
+          "src": "575:20:5"
         }
       ],
       "warnings": {
@@ -876,7 +884,9 @@
         "hasSelfDestruct": false,
         "hasDelegateCall": false,
         "hasInitialValuesInDeclarations": false,
-        "uninitializedBaseContracts": []
+        "uninitializedBaseContracts": [],
+        "storageUncheckedVars": [],
+        "storageDiff": []
       }
     },
     "AskoDevFund": {
@@ -1524,7 +1534,7 @@
       {
         "address": "0x736eAA654057506670994CA4b89b9848a7e7A061",
         "version": "1.0.0",
-        "implementation": "0xC540565759aba1c386039270cbEc8b7941995C50",
+        "implementation": "0x8Dd4B9c337fAfB5aE3DC52c3be95C9a96eE62567",
         "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
         "kind": "Upgradeable"
       }

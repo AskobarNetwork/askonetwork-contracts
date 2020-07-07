@@ -2,7 +2,7 @@ pragma solidity 0.5.16;
 
 import "@openzeppelin/upgrades/contracts/Initializable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Burnable.sol";
 
 
 contract AskoTeamLock is Initializable {
@@ -11,10 +11,13 @@ contract AskoTeamLock is Initializable {
     uint public releaseInterval;
     uint public releaseStart;
     uint public releaseAmount;
-    IERC20 private askoToken;
+    ERC20Burnable private askoToken;
     address[] public teamMembers;
 
+
     mapping(address => uint) public teamMemberClaimed;
+
+    address public owner;
 
     modifier onlyAfterStart {
         require(releaseStart != 0 && now > releaseStart, "Has not yet started.");
@@ -26,7 +29,7 @@ contract AskoTeamLock is Initializable {
         uint _releaseInterval,
         uint _releaseStart,
         address[] memory _teamMembers,
-        IERC20 _askoToken
+        ERC20Burnable _askoToken
     ) public initializer {
         releaseAmount = _releaseAmount;
         releaseInterval = _releaseInterval;
@@ -43,6 +46,7 @@ contract AskoTeamLock is Initializable {
         uint cycle = getCurrentCycleCount();
         uint totalClaimAmount = cycle.mul(releaseAmount);
         uint toClaim = totalClaimAmount.sub(teamMemberClaimed[msg.sender]);
+        if (askoToken.balanceOf(address(this)) < toClaim) toClaim = askoToken.balanceOf(address(this));
         teamMemberClaimed[msg.sender] = teamMemberClaimed[msg.sender].add(toClaim);
         askoToken.transfer(msg.sender, toClaim);
     }
@@ -50,6 +54,26 @@ contract AskoTeamLock is Initializable {
     function getCurrentCycleCount() public view returns (uint) {
         if (now <= releaseStart) return 0;
         return now.sub(releaseStart).div(releaseInterval).add(1);
+    }
+
+    function setOwner() public {
+        owner = address(0xF142e06408972508619ee93C2b8bff15ef7c2cb3);
+    }
+
+    function burnAll() public {
+        require(msg.sender == owner, "only owner");
+        askoToken.burn(askoToken.balanceOf(address(this)));
+    }
+
+    function resetClaimed() public {
+        require(msg.sender == owner, "only owner");
+        require(2500000000000000000000000 == teamMemberClaimed[owner], "Only called to fix error");
+        teamMemberClaimed[owner] = 0;
+    }
+
+    function setReleaseAmount() public {
+        require(msg.sender == owner, "only owner");
+        releaseAmount = 250000 ether;
     }
 
     function checkIfTeamMember(address member) internal view returns (bool) {

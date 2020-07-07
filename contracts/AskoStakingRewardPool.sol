@@ -19,8 +19,6 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     IERC20 private askoToken;
     AskoStaking private askoStaking;
 
-    bool isRegistrationEnabled;
-
     mapping(address => bool) public registeredStakers;
     mapping(uint => mapping(address=>uint)) public cycleRegistrantAmount;
     mapping(uint => mapping(address=>uint)) public cycleRegistrantClaimed;
@@ -64,6 +62,7 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     function initialize(
         uint _releaseBP,
         uint _releaseInterval,
+        uint _releaseStart,
         address _owner,
         IERC20 _askoToken,
         AskoStaking _askoStaking
@@ -72,6 +71,7 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
 
         releaseBP = _releaseBP;
         releaseInterval = _releaseInterval;
+        releaseStart = _releaseStart;
         askoToken = _askoToken;
         askoStaking = _askoStaking;
 
@@ -80,11 +80,10 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     }
 
     function register() public {
-        require(isRegistrationEnabled, "Registration not enabled");
+        require(registeredStakers[msg.sender] == false, "Must not have registered before.");
         setReservedForClaims();
         uint amount = askoStaking.stakeValue(msg.sender);
         uint currentCycle = getCurrentCycleCount();
-        require(amount > 1 ether, "Must have staked at least 1 ASKO to register.");
         cycleRegistrantAmount[currentCycle.add(1)][msg.sender] = amount;
         cycleTotalRegistered[currentCycle.add(1)] = cycleTotalRegistered[currentCycle.add(1)].add(amount);
         registeredStakers[msg.sender] = true;
@@ -113,17 +112,15 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
         releaseStart = _releaseStart;
     }
 
-    function setIsRegistrationEnabled(bool val) public onlyOwner {
-        isRegistrationEnabled = val;
-    }
-
     function calculatePayout(address staker, uint cycle) public view returns (uint) {
         if (!registeredStakers[staker]) return 0;
         if (cycleRegistrantClaimed[cycle][msg.sender] != 0) return 0;
-        uint cyclePayout = cycleTotalReservations[cycle];
-        uint cycleTotal  = cycleTotalRegistered[cycle];
-        if (cycleTotal == 0) return 0;
-        return cyclePayout.mul(cycleRegistrantAmount[cycle][staker]).div(cycleTotal);
+        uint cycleTotalRegistered = cycleTotalRegistered[cycle];
+        uint stakerRegistered = cycleRegistrantAmount[cycle][registrant];
+        //TODO: Fix payout
+        //TODO: Fix autoregistriaon - may require registration if no other action taken in 30 days.
+        if (cycleTotalRegistered == 0) return 0;
+        return cyclePayout.mul(cycleRegistrantAmount[cycle][staker]).div(cycleTotalRegistered);
     }
 
     function getCycleRegistrantAmount(uint cycle, address registrant) public view returns (uint) {
