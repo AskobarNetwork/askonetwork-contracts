@@ -1502,6 +1502,31 @@
         "implementation": "0x660edD1600c8e37910Cc243D8b7581cA084F897b",
         "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
         "kind": "Upgradeable"
+      },
+      {
+        "address": "0x7b4B93f301b2d6a21903583F3ACC7d170E773bF1",
+        "version": "1.0.0",
+        "implementation": "0x660edD1600c8e37910Cc243D8b7581cA084F897b",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      }
+    ],
+    "askonetwork-contracts/AskoPromoFund": [
+      {
+        "address": "0x4bF97126dF9F4c33DdD463A99Ea02c25fD558284",
+        "version": "1.0.0",
+        "implementation": "0x0000000000000000000000000000000000000000",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      }
+    ],
+    "askonetwork-contracts/AskoTeamLock": [
+      {
+        "address": "0x736eAA654057506670994CA4b89b9848a7e7A061",
+        "version": "1.0.0",
+        "implementation": "0xC540565759aba1c386039270cbEc8b7941995C50",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
       }
     ]
   },
