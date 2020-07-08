@@ -39,13 +39,14 @@ describe("AskoStakingRewardPool", function() {
     await this.askoStakingRewardPool.initialize(
       stakingRewardPoolParams.releaseBP,
       stakingRewardPoolParams.releaseInterval,
-      stakingRewardPoolParams.releaseStart,
+      stakingRewardPoolParams.cycleStart,
       owner,
       this.askoToken.address,
       this.askoStaking.address
     )
 
     await this.askoToken.setIsTaxActive(true,{from:owner})
+    await this.askoToken.setTaxExemptStatus(this.askoStakingRewardPool.address,true,{from:owner})
 
     await this.askoStaking.setStartTime(stakingParams.startTime,{from:owner})
     await this.askoStaking.registerStakeHandler(this.askoStakingRewardPool.address,{from:owner})
@@ -94,52 +95,45 @@ describe("AskoStakingRewardPool", function() {
       it("Should set registeredStakers to true", async function() {
         const staker = registeredStakers[0]
         await this.askoStakingRewardPool.register({from:staker})
-        let isRegistered = await this.askoStakingRewardPool.registeredStakers(staker)
+        let isRegistered = await this.askoStakingRewardPool.isStakerRegistered(staker)
         expect(isRegistered).to.equal(true)
       })
-      it("Should revert if already registered", async function() {
-        const staker = registeredStakers[0]
-        await expectRevert(
-          this.askoStakingRewardPool.register({from:staker}),
-          "Must not have registered before."
-        )
-      })
-      it("Should increase cycleRegistrantAmount for next cycle by stakeValue when stake then register.", async function() {
+      it("Should increase cycleStakerPoolOwnership for next cycle by stakeValue when stake then register.", async function() {
         const staker = registeredStakers[1]
         const value = ether("5")
         await this.askoStaking.stake(value,{from:staker})
         await this.askoStakingRewardPool.register({from:staker})
-        const registrantAmount = await this.askoStakingRewardPool.cycleRegistrantAmount("1",staker)
+        const registrantAmount = await this.askoStakingRewardPool.cycleStakerPoolOwnership("1",staker)
         const stakeValue = await this.askoStaking.stakeValue(staker)
         expect(registrantAmount.toString()).to.equal(stakeValue.toString())
       })
-      it("Should increase cycleRegistrantAmount for next cycle by stakeValue when register then stake.", async function() {
+      it("Should increase cycleStakerPoolOwnership for next cycle by stakeValue when register then stake.", async function() {
         const staker = registeredStakers[2]
         const value = ether("5")
         await this.askoStakingRewardPool.register({from:staker})
         await this.askoStaking.stake(value,{from:staker})
-        const registrantAmount = await this.askoStakingRewardPool.cycleRegistrantAmount("1",staker)
+        const registrantAmount = await this.askoStakingRewardPool.cycleStakerPoolOwnership("1",staker)
         const stakeValue = await this.askoStaking.stakeValue(staker)
         expect(registrantAmount.toString()).to.equal(stakeValue.toString())
       })
-      it("Should increase cycleRegistrantAmount for next cycle by final stakeValue when stake, unstake, then register", async function() {
+      it("Should increase cycleStakerPoolOwnership for next cycle by final stakeValue when stake, unstake, then register", async function() {
         const staker = registeredStakers[3]
         const value = ether("5")
         const unstakeValue = ether("3")
         await this.askoStakingRewardPool.register({from:staker})
         await this.askoStaking.stake(value,{from:staker})
         await this.askoStaking.unstake(unstakeValue,{from:staker})
-        const registrantAmount = await this.askoStakingRewardPool.cycleRegistrantAmount("1",staker)
+        const registrantAmount = await this.askoStakingRewardPool.cycleStakerPoolOwnership("1",staker)
         const stakeValue = await this.askoStaking.stakeValue(staker)
         expect(registrantAmount.toString()).to.equal(stakeValue.toString())
       })
-      it("Should increase cycleTotalRegistered for next cycle by stakeValue on stake.", async function() {
+      it("Should increase cyclePoolTotal for next cycle by stakeValue on stake.", async function() {
         const staker = registeredStakers[0]
         const value = ether("5")
-        const cycleTotalRegisteredInitial = await this.askoStakingRewardPool.cycleTotalRegistered("1")
+        const cycleTotalRegisteredInitial = await this.askoStakingRewardPool.cyclePoolTotal("1")
         await this.askoStaking.stake(value,{from:staker})
         const stakeValue = await this.askoStaking.stakeValue(staker)
-        const cycleTotalRegisteredFinal = await this.askoStakingRewardPool.cycleTotalRegistered("1")
+        const cycleTotalRegisteredFinal = await this.askoStakingRewardPool.cyclePoolTotal("1")
         expect(cycleTotalRegisteredFinal.toString())
           .to.equal(new BN(cycleTotalRegisteredInitial).add(new BN(stakeValue)).toString())
       })
@@ -170,8 +164,8 @@ describe("AskoStakingRewardPool", function() {
     describe("#calculatePayout", function(){
       it("Should be basispoints of contract balance * percent ownership for next cycle", async function() {
         const staker = registeredStakers[0]
-        const registeredAmount = await this.askoStakingRewardPool.cycleRegistrantAmount("1",staker)
-        const totalRegistered = await this.askoStakingRewardPool.cycleTotalRegistered("1")
+        const registeredAmount = await this.askoStakingRewardPool.cycleStakerPoolOwnership("1",staker)
+        const totalRegistered = await this.askoStakingRewardPool.cyclePoolTotal("1")
         let payout = await this.askoStakingRewardPool.calculatePayout(staker,"1");
         console.log("registeredAmount",registeredAmount.toString())
         console.log("totalRegistered",totalRegistered.toString())

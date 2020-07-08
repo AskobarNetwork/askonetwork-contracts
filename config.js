@@ -28,7 +28,7 @@ config.AskoPresale = {
 config.AskoStakingRewardPool = {
   releaseBP: 1000,
   releaseInterval: 86400*30,
-  releaseStart: 1594215000,
+  cycleStart: 1594387800,
   size: ether("26000000")
 }
 
