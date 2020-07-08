@@ -19,6 +19,7 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
     bool public isTaxActive;
     AskoStaking private askoStaking;
     mapping(address => bool) private trustedContracts;
+    mapping(address => bool) public taxExempt;
 
     function initialize(
         string memory name, string memory symbol, uint8 decimals,
@@ -46,19 +47,23 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
         _transferOwnership(owner);
     }
 
+    function setTaxExemptStatus(address account, bool status) public onlyOwner {
+        taxExempt[account] = status;
+    }
+
     function findTaxAmount(uint value) public view returns (uint) {
         return value.mulBP(taxBP);
     }
 
     function transfer(address recipient, uint256 amount) public returns (bool) {
-        isTaxActive ?
+        (isTaxActive && !taxExempt[msg.sender] && !taxExempt[recipient]) ?
             _transferWithTax(msg.sender, recipient, amount) :
             _transfer(msg.sender, recipient, amount);
         return true;
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public returns (bool) {
-        isTaxActive ?
+        (isTaxActive && !taxExempt[sender] && !taxExempt[recipient]) ?
             _transferWithTax(sender, recipient, amount) :
             _transfer(sender, recipient, amount);
         if (trustedContracts[msg.sender]) return true;

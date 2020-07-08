@@ -115,12 +115,13 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     function calculatePayout(address staker, uint cycle) public view returns (uint) {
         if (!registeredStakers[staker]) return 0;
         if (cycleRegistrantClaimed[cycle][msg.sender] != 0) return 0;
-        uint cycleTotalRegistered = cycleTotalRegistered[cycle];
-        uint stakerRegistered = cycleRegistrantAmount[cycle][registrant];
+        uint total = cycleTotalRegistered[cycle];
+        uint stakerRegistered = cycleRegistrantAmount[cycle][staker];
         //TODO: Fix payout
         //TODO: Fix autoregistriaon - may require registration if no other action taken in 30 days.
-        if (cycleTotalRegistered == 0) return 0;
-        return cyclePayout.mul(cycleRegistrantAmount[cycle][staker]).div(cycleTotalRegistered);
+        if (total == 0) return 0;
+        return 0;
+        //return cyclePayout.mul(cycleRegistrantAmount[cycle][staker]).div(total);
     }
 
     function getCycleRegistrantAmount(uint cycle, address registrant) public view returns (uint) {

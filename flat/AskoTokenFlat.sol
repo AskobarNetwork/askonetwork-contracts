@@ -1,5 +1,6 @@
 pragma solidity 0.5.16;
 
+
 /**
  * @title Initializable
  *
@@ -161,162 +162,6 @@ interface IERC20 {
      * a call to {approve}. `value` is the new allowance.
      */
     event Approval(address indexed owner, address indexed spender, uint256 value);
-}
-
-
-/**
- * @dev Wrappers over Solidity's arithmetic operations with added overflow
- * checks.
- *
- * Arithmetic operations in Solidity wrap on overflow. This can easily result
- * in bugs, because programmers usually assume that an overflow raises an
- * error, which is the standard behavior in high level programming languages.
- * `SafeMath` restores this intuition by reverting the transaction when an
- * operation overflows.
- *
- * Using this library instead of the unchecked operations eliminates an entire
- * class of bugs, so it's recommended to use it always.
- */
-library SafeMath {
-    /**
-     * @dev Returns the addition of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `+` operator.
-     *
-     * Requirements:
-     * - Addition cannot overflow.
-     */
-    function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        uint256 c = a + b;
-        require(c >= a, "SafeMath: addition overflow");
-
-        return c;
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting on
-     * overflow (when the result is negative).
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     * - Subtraction cannot overflow.
-     */
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        return sub(a, b, "SafeMath: subtraction overflow");
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
-     * overflow (when the result is negative).
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     * - Subtraction cannot overflow.
-     *
-     * _Available since v2.4.0._
-     */
-    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b <= a, errorMessage);
-        uint256 c = a - b;
-
-        return c;
-    }
-
-    /**
-     * @dev Returns the multiplication of two unsigned integers, reverting on
-     * overflow.
-     *
-     * Counterpart to Solidity's `*` operator.
-     *
-     * Requirements:
-     * - Multiplication cannot overflow.
-     */
-    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-        // benefit is lost if 'b' is also tested.
-        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
-        if (a == 0) {
-            return 0;
-        }
-
-        uint256 c = a * b;
-        require(c / a == b, "SafeMath: multiplication overflow");
-
-        return c;
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers. Reverts on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     */
-    function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        return div(a, b, "SafeMath: division by zero");
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     *
-     * _Available since v2.4.0._
-     */
-    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        // Solidity only automatically asserts when dividing by 0
-        require(b > 0, errorMessage);
-        uint256 c = a / b;
-        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-
-        return c;
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * Reverts when dividing by zero.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     */
-    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        return mod(a, b, "SafeMath: modulo by zero");
-    }
-
-    /**
-     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * Reverts with custom message when dividing by zero.
-     *
-     * Counterpart to Solidity's `%` operator. This function uses a `revert`
-     * opcode (which leaves remaining gas untouched) while Solidity uses an
-     * invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     * - The divisor cannot be zero.
-     *
-     * _Available since v2.4.0._
-     */
-    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b != 0, errorMessage);
-        return a % b;
-    }
 }
 
 
@@ -780,6 +625,7 @@ contract PauserRole is Initializable, Context {
     uint256[50] private ______gap;
 }
 
+
 /**
  * @dev Contract module which allows children to implement an emergency stop
  * mechanism that can be triggered by an authorized account.
@@ -893,6 +739,162 @@ contract ERC20Pausable is Initializable, ERC20, Pausable {
 
 
 /**
+ * @dev Wrappers over Solidity's arithmetic operations with added overflow
+ * checks.
+ *
+ * Arithmetic operations in Solidity wrap on overflow. This can easily result
+ * in bugs, because programmers usually assume that an overflow raises an
+ * error, which is the standard behavior in high level programming languages.
+ * `SafeMath` restores this intuition by reverting the transaction when an
+ * operation overflows.
+ *
+ * Using this library instead of the unchecked operations eliminates an entire
+ * class of bugs, so it's recommended to use it always.
+ */
+library SafeMath {
+    /**
+     * @dev Returns the addition of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `+` operator.
+     *
+     * Requirements:
+     * - Addition cannot overflow.
+     */
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a + b;
+        require(c >= a, "SafeMath: addition overflow");
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     * - Subtraction cannot overflow.
+     */
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        return sub(a, b, "SafeMath: subtraction overflow");
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     * - Subtraction cannot overflow.
+     *
+     * _Available since v2.4.0._
+     */
+    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        require(b <= a, errorMessage);
+        uint256 c = a - b;
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `*` operator.
+     *
+     * Requirements:
+     * - Multiplication cannot overflow.
+     */
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+        // benefit is lost if 'b' is also tested.
+        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
+        if (a == 0) {
+            return 0;
+        }
+
+        uint256 c = a * b;
+        require(c / a == b, "SafeMath: multiplication overflow");
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers. Reverts on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     * - The divisor cannot be zero.
+     */
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return div(a, b, "SafeMath: division by zero");
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     * - The divisor cannot be zero.
+     *
+     * _Available since v2.4.0._
+     */
+    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        // Solidity only automatically asserts when dividing by 0
+        require(b > 0, errorMessage);
+        uint256 c = a / b;
+        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * Reverts when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+        return mod(a, b, "SafeMath: modulo by zero");
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * Reverts with custom message when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     * - The divisor cannot be zero.
+     *
+     * _Available since v2.4.0._
+     */
+    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        require(b != 0, errorMessage);
+        return a % b;
+    }
+}
+
+
+/**
  * @dev Contract module which provides a basic access control mechanism, where
  * there is an account (an owner) that can be granted exclusive access to
  * specific functions.
@@ -968,10 +970,6 @@ contract Ownable is Initializable, Context {
     uint256[50] private ______gap;
 }
 
-// File: contracts\library\BasisPoints.sol
-
-pragma solidity 0.5.16;
-
 
 library BasisPoints {
     using SafeMath for uint;
@@ -997,6 +995,12 @@ library BasisPoints {
 }
 
 
+interface IStakeHandler {
+    function handleStake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external;
+    function handleUnstake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external;
+}
+
+
 contract AskoStaking is Initializable, Ownable {
     using BasisPoints for uint;
     using SafeMath for uint;
@@ -1016,6 +1020,9 @@ contract AskoStaking is Initializable, Ownable {
     uint private profitPerShare;
     uint private emptyStakeTokens; //These are tokens given to the contract when there are no stakers.
 
+    IStakeHandler[] public stakeHandlers;
+    uint public startTime;
+
     event OnDistribute(address sender, uint amountSent);
     event OnStake(address sender, uint amount, uint tax);
     event OnUnstake(address sender, uint amount, uint tax);
@@ -1027,7 +1034,17 @@ contract AskoStaking is Initializable, Ownable {
         _;
     }
 
-    function initialize(uint _stakingTaxBP, uint _ustakingTaxBP, address owner, IERC20 _askoToken) public initializer {
+    modifier whenStakingActive {
+        require(startTime != 0 && now > startTime, "Staking not yet started.");
+        _;
+    }
+
+    function initialize(
+        uint _stakingTaxBP,
+        uint _ustakingTaxBP,
+        address owner,
+        IERC20 _askoToken
+    ) public initializer {
         Ownable.initialize(msg.sender);
         stakingTaxBP = _stakingTaxBP;
         unstakingTaxBP = _ustakingTaxBP;
@@ -1036,7 +1053,7 @@ contract AskoStaking is Initializable, Ownable {
         _transferOwnership(owner);
     }
 
-    function stake(uint amount) public {
+    function stake(uint amount) public whenStakingActive {
         require(amount >= 1e18, "Must stake at least one ASKO.");
         require(askoToken.balanceOf(msg.sender) >= amount, "Cannot stake more ASKO than you hold unstaked.");
         if (stakeValue[msg.sender] == 0) totalStakers = totalStakers.add(1);
@@ -1045,7 +1062,7 @@ contract AskoStaking is Initializable, Ownable {
         emit OnStake(msg.sender, amount, tax);
     }
 
-    function unstake(uint amount) public {
+    function unstake(uint amount) public whenStakingActive {
         require(amount >= 1e18, "Must unstake at least one ASKO.");
         require(stakeValue[msg.sender] >= amount, "Cannot unstake more ASKO than you have staked.");
         uint tax = findTaxAmount(amount, unstakingTaxBP);
@@ -1055,19 +1072,22 @@ contract AskoStaking is Initializable, Ownable {
         stakeValue[msg.sender] = stakeValue[msg.sender].sub(amount);
         uint payout = profitPerShare.mul(amount).add(tax.mul(DISTRIBUTION_MULTIPLIER));
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] - uintToInt(payout);
+        for (uint i=0; i < stakeHandlers.length; i++) {
+            stakeHandlers[i].handleUnstake(msg.sender, amount, stakeValue[msg.sender]);
+        }
         _increaseProfitPerShare(tax);
         require(askoToken.transferFrom(address(this), msg.sender, earnings), "Unstake failed due to failed transfer.");
         emit OnUnstake(msg.sender, amount, tax);
     }
 
-    function withdraw(uint amount) public {
+    function withdraw(uint amount) public whenStakingActive {
         require(dividendsOf(msg.sender) >= amount, "Cannot withdraw more dividends than you have earned.");
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(amount.mul(DISTRIBUTION_MULTIPLIER));
         askoToken.transfer(msg.sender, amount);
         emit OnWithdraw(msg.sender, amount);
     }
 
-    function reinvest(uint amount) public {
+    function reinvest(uint amount) public whenStakingActive {
         require(dividendsOf(msg.sender) >= amount, "Cannot reinvest more dividends than you have earned.");
         uint payout = amount.mul(DISTRIBUTION_MULTIPLIER);
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
@@ -1101,6 +1121,34 @@ contract AskoStaking is Initializable, Ownable {
         return value.mulBP(taxBP);
     }
 
+    function numberStakeHandlersRegistered() public view returns (uint) {
+        return stakeHandlers.length;
+    }
+
+    function registerStakeHandler(IStakeHandler sc) public onlyOwner {
+        stakeHandlers.push(sc);
+    }
+
+    function unregisterStakeHandler(uint index) public onlyOwner {
+        IStakeHandler sc = stakeHandlers[stakeHandlers.length-1];
+        stakeHandlers.pop();
+        stakeHandlers[index] = sc;
+    }
+
+    function setStakingBP(uint valueBP) public onlyOwner {
+        require(valueBP < 10000, "Tax connot be over 100% (10000 BP)");
+        stakingTaxBP = valueBP;
+    }
+
+    function setUnstakingBP(uint valueBP) public onlyOwner {
+        require(valueBP < 10000, "Tax connot be over 100% (10000 BP)");
+        unstakingTaxBP = valueBP;
+    }
+
+    function setStartTime(uint _startTime) public onlyOwner {
+        startTime = _startTime;
+    }
+
     function uintToInt(uint val) internal pure returns (int) {
         if (val >= uint(-1).div(2)) {
             require(false, "Overflow. Cannot convert uint to int.");
@@ -1114,6 +1162,9 @@ contract AskoStaking is Initializable, Ownable {
         uint stakeAmount = amount.sub(tax);
         totalStaked = totalStaked.add(stakeAmount);
         stakeValue[msg.sender] = stakeValue[msg.sender].add(stakeAmount);
+        for (uint i=0; i < stakeHandlers.length; i++) {
+            stakeHandlers[i].handleStake(msg.sender, stakeAmount, stakeValue[msg.sender]);
+        }
         uint payout = profitPerShare.mul(stakeAmount);
         stakerPayouts[msg.sender] = stakerPayouts[msg.sender] + uintToInt(payout);
         _increaseProfitPerShare(tax);
@@ -1134,6 +1185,7 @@ contract AskoStaking is Initializable, Ownable {
 }
 
 
+
 contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable, ERC20Detailed, Ownable {
     using BasisPoints for uint;
     using SafeMath for uint;
@@ -1142,6 +1194,7 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
     bool public isTaxActive;
     AskoStaking private askoStaking;
     mapping(address => bool) private trustedContracts;
+    mapping(address => bool) public taxExempt;
 
     function initialize(
         string memory name, string memory symbol, uint8 decimals,
@@ -1169,19 +1222,23 @@ contract AskoToken is Initializable, ERC20Burnable, ERC20Mintable, ERC20Pausable
         _transferOwnership(owner);
     }
 
+    function setTaxExemptStatus(address account, bool status) public onlyOwner {
+        taxExempt[account] = status;
+    }
+
     function findTaxAmount(uint value) public view returns (uint) {
         return value.mulBP(taxBP);
     }
 
     function transfer(address recipient, uint256 amount) public returns (bool) {
-        isTaxActive ?
+        (isTaxActive && !taxExempt[msg.sender] && !taxExempt[recipient]) ?
             _transferWithTax(msg.sender, recipient, amount) :
             _transfer(msg.sender, recipient, amount);
         return true;
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public returns (bool) {
-        isTaxActive ?
+        (isTaxActive && !taxExempt[sender] && !taxExempt[recipient]) ?
             _transferWithTax(sender, recipient, amount) :
             _transfer(sender, recipient, amount);
         if (trustedContracts[msg.sender]) return true;
