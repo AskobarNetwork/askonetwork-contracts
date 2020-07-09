@@ -163,18 +163,19 @@ describe("AskoStakingRewardPool", function() {
     })
     describe("#calculatePayout", function(){
       it("Should be basispoints of contract balance * percent ownership for next cycle", async function() {
-        const staker = registeredStakers[0]
-        const registeredAmount = await this.askoStakingRewardPool.cycleStakerPoolOwnership("1",staker)
-        const totalRegistered = await this.askoStakingRewardPool.cyclePoolTotal("1")
-        let payout = await this.askoStakingRewardPool.calculatePayout(staker,"1");
-        console.log("registeredAmount",registeredAmount.toString())
-        console.log("totalRegistered",totalRegistered.toString())
-        console.log("payout",payout.toString())
-        let expectedPayout = (registeredAmount)
+        const staker = registeredStakers[1]
+        const cycleStakerPoolOwnership = await this.askoStakingRewardPool.cycleStakerPoolOwnership("1",staker)
+        const cyclePoolTotal = await this.askoStakingRewardPool.cyclePoolTotal("1")
+        const cycleTotalReward = await this.askoStakingRewardPool.cycleTotalReward("1")
+        const cycleStakerClaimed = await this.askoStakingRewardPool.cycleStakerClaimed("1",staker)
+        const isStakerRegistered = await this.askoStakingRewardPool.isStakerRegistered(staker)
+        const balance = await this.askoToken.balanceOf(this.askoStakingRewardPool.address)
+        let payout = await this.askoStakingRewardPool.calculatePayout(staker,"1")
+        let expectedPayout = (cycleStakerPoolOwnership)
           .mul(new BN(config.AskoStakingRewardPool.size))
-          .mul(new BN(10000))
-          .div(new BN(config.AskoStakingRewardPool.releaseBP))
-          .div(totalRegistered)
+          .mul(new BN(config.AskoStakingRewardPool.releaseBP))
+          .div(new BN(10000))
+          .div(cyclePoolTotal)
         expect("0").to.not.equal(payout.toString())
         expect(expectedPayout.toString()).to.equal(payout.toString())
       })

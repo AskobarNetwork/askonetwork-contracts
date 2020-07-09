@@ -45,14 +45,14 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
         if (!isStakerRegistered[staker]) return;
         uint currentCycle = getCurrentCycleCount();
         _updateReservedForClaims(currentCycle);
-        _updateStakerPoolOwnershipNextCycle(currentCycle.add(1), staker, stakeValue);
+        _updateStakerPoolOwnershipNextCycle(currentCycle, staker, stakeValue);
     }
 
     function handleUnstake(address staker, uint stakerDeltaValue, uint stakeValue) external onlyFromAskoStaking {
         if (!isStakerRegistered[staker]) return;
         uint currentCycle = getCurrentCycleCount();
         _updateReservedForClaims(currentCycle);
-        _updateStakerPoolOwnershipNextCycle(currentCycle.add(1), staker, stakeValue);
+        _updateStakerPoolOwnershipNextCycle(currentCycle, staker, stakeValue);
         _updateStakerPoolOwnershipCurrentCycle(currentCycle, staker, stakeValue);
     }
 
@@ -82,7 +82,7 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
         uint currentCycle = getCurrentCycleCount();
 
         _updateReservedForClaims(currentCycle);
-        _updateStakerPoolOwnershipNextCycle(currentCycle.add(1), msg.sender, askoStaking.stakeValue(msg.sender));
+        _updateStakerPoolOwnershipNextCycle(currentCycle, msg.sender, askoStaking.stakeValue(msg.sender));
 
         emit OnRegister(msg.sender);
     }
@@ -91,8 +91,8 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
         uint currentCycle = getCurrentCycleCount();
         uint payout = calculatePayout(msg.sender, currentCycle);
 
-        _updateReservedForClaims(requestCycle);
-        _updateStakerPoolOwnershipNextCycle(currentCycle.add(1), msg.sender, askoStaking.stakeValue(msg.sender));
+        _updateReservedForClaims(currentCycle);
+        _updateStakerPoolOwnershipNextCycle(currentCycle, msg.sender, askoStaking.stakeValue(msg.sender));
         _updateClaimReservations(currentCycle, requestCycle, payout, msg.sender);
 
         askoToken.transfer(msg.sender, payout);
@@ -110,7 +110,6 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
 
     function calculatePayout(address staker, uint cycle) public view returns (uint) {
         if (!isStakerRegistered[staker]) return 0;
-        if (cycleStakerPoolOwnership[cycle][staker] != 0) return 0;
         if (cycleStakerClaimed[cycle][staker] != 0) return 0;
         if (cycleTotalReward[cycle] == 0) return 0;
 
@@ -128,14 +127,14 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     }
 
     function _updateReservedForClaims(uint currentCycle) internal {
-        if (currentCycle != lastCycleSetReservedForClaims.add(1)) return;
-        if (currentCycle != getCurrentCycleCount()) return;
+        uint nextCycle = currentCycle.add(1);
+        if (nextCycle <= lastCycleSetReservedForClaims) return;
 
-        lastCycleSetReservedForClaims = currentCycle;
+        lastCycleSetReservedForClaims = nextCycle;
 
         uint newlyReservedAsko = askoToken.balanceOf(address(this)).sub(reservedForClaims).mulBP(releaseBP);
         reservedForClaims = reservedForClaims.add(newlyReservedAsko);
-        cycleTotalReward[currentCycle] = newlyReservedAsko;
+        cycleTotalReward[nextCycle] = newlyReservedAsko;
     }
 
     function _updateClaimReservations(uint currentCycle, uint requestCycle, uint payout, address claimer) internal {
