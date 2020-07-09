@@ -1306,11 +1306,11 @@
       }
     },
     "AskoStakingRewardPool": {
-      "address": "0xEFd54E40B807d3a35f0F5bA748325cbD7423aA59",
-      "constructorCode": "608060405261175c806100136000396000f3fe",
-      "bodyBytecodeHash": "81ee16491f4d6eb0d6b71f4e797b188f3358e047468d262c2e524d5ddcda87d3",
-      "localBytecodeHash": "03a9bfcbfb8d4af1e996f5758d49101a05af90e30009cdab2d93225db4cd8469",
-      "deployedBytecodeHash": "03a9bfcbfb8d4af1e996f5758d49101a05af90e30009cdab2d93225db4cd8469",
+      "address": "0xB535FB5b41D0d451E38Eac92e7a6D0cE2c7A8200",
+      "constructorCode": "6080604052611717806100136000396000f3fe",
+      "bodyBytecodeHash": "ab5202591ceceb6e80734902f378b3ff53eefe9d2799db9e634c9e3e5f6525fc",
+      "localBytecodeHash": "997d1c5f9c35fe4e22a0aa52eb61e669395a291c5f7c8faa7275671318cfc64e",
+      "deployedBytecodeHash": "997d1c5f9c35fe4e22a0aa52eb61e669395a291c5f7c8faa7275671318cfc64e",
       "types": {
         "t_bool": {
           "id": "t_bool",
@@ -1352,7 +1352,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initialized",
-          "astId": 8387,
+          "astId": 8427,
           "type": "t_bool",
           "src": "757:24:37"
         },
@@ -1360,7 +1360,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initializing",
-          "astId": 8389,
+          "astId": 8429,
           "type": "t_bool",
           "src": "876:25:37"
         },
@@ -1368,7 +1368,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "______gap",
-          "astId": 8451,
+          "astId": 8491,
           "type": "t_array:50<t_uint256>",
           "src": "1982:29:37"
         },
@@ -1376,7 +1376,7 @@
           "contract": "Ownable",
           "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
           "label": "_owner",
-          "astId": 7508,
+          "astId": 7548,
           "type": "t_address",
           "src": "526:22:30"
         },
@@ -1384,7 +1384,7 @@
           "contract": "Ownable",
           "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
           "label": "______gap",
-          "astId": 7621,
+          "astId": 7661,
           "type": "t_array:50<t_uint256>",
           "src": "2471:29:30"
         },
@@ -1407,10 +1407,10 @@
         {
           "contract": "AskoStakingRewardPool",
           "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
-          "label": "releaseStart",
+          "label": "cycleStart",
           "astId": 1920,
           "type": "t_uint256",
-          "src": "656:24:4"
+          "src": "656:22:4"
         },
         {
           "contract": "AskoStakingRewardPool",
@@ -1418,7 +1418,7 @@
           "label": "askoToken",
           "astId": 1922,
           "type": "t_address",
-          "src": "687:24:4"
+          "src": "685:24:4"
         },
         {
           "contract": "AskoStakingRewardPool",
@@ -1426,39 +1426,39 @@
           "label": "askoStaking",
           "astId": 1924,
           "type": "t_address",
-          "src": "718:31:4"
+          "src": "716:31:4"
         },
         {
           "contract": "AskoStakingRewardPool",
           "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
-          "label": "registeredStakers",
+          "label": "isStakerRegistered",
           "astId": 1928,
           "type": "t_mapping<t_bool>",
-          "src": "758:49:4"
+          "src": "756:50:4"
         },
         {
           "contract": "AskoStakingRewardPool",
           "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
-          "label": "cycleRegistrantAmount",
+          "label": "cycleStakerPoolOwnership",
           "astId": 1934,
           "type": "t_mapping<t_uint256>",
-          "src": "814:68:4"
+          "src": "813:71:4"
         },
         {
           "contract": "AskoStakingRewardPool",
           "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
-          "label": "cycleRegistrantClaimed",
+          "label": "cycleStakerClaimed",
           "astId": 1940,
           "type": "t_mapping<t_uint256>",
-          "src": "889:69:4"
+          "src": "891:65:4"
         },
         {
           "contract": "AskoStakingRewardPool",
           "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
-          "label": "cycleTotalRegistered",
+          "label": "cyclePoolTotal",
           "astId": 1944,
           "type": "t_mapping<t_uint256>",
-          "src": "965:49:4"
+          "src": "963:43:4"
         },
         {
           "contract": "AskoStakingRewardPool",
@@ -1466,7 +1466,7 @@
           "label": "reservedForClaims",
           "astId": 1946,
           "type": "t_uint256",
-          "src": "1023:29:4"
+          "src": "1015:29:4"
         },
         {
           "contract": "AskoStakingRewardPool",
@@ -1474,15 +1474,15 @@
           "label": "lastCycleSetReservedForClaims",
           "astId": 1948,
           "type": "t_uint256",
-          "src": "1059:41:4"
+          "src": "1051:41:4"
         },
         {
           "contract": "AskoStakingRewardPool",
           "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
-          "label": "cycleTotalReservations",
+          "label": "cycleTotalReward",
           "astId": 1952,
           "type": "t_mapping<t_uint256>",
-          "src": "1107:51:4"
+          "src": "1099:45:4"
         }
       ],
       "warnings": {
@@ -1494,15 +1494,129 @@
         "storageUncheckedVars": [],
         "storageDiff": [
           {
-            "action": "delete",
+            "action": "rename",
+            "updated": {
+              "index": 7,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleStart",
+              "astId": 1920,
+              "type": "t_uint256",
+              "src": "656:22:4"
+            },
+            "original": {
+              "index": 7,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "releaseStart",
+              "astId": 1920,
+              "type": "t_uint256",
+              "src": "656:24:4"
+            }
+          },
+          {
+            "action": "rename",
+            "updated": {
+              "index": 10,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "isStakerRegistered",
+              "astId": 1928,
+              "type": "t_mapping<t_bool>",
+              "src": "756:50:4"
+            },
             "original": {
               "index": 10,
               "contract": "AskoStakingRewardPool",
               "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
-              "label": "isRegistrationEnabled",
-              "astId": 1926,
-              "type": "t_bool",
-              "src": "758:26:4"
+              "label": "registeredStakers",
+              "astId": 1928,
+              "type": "t_mapping<t_bool>",
+              "src": "758:49:4"
+            }
+          },
+          {
+            "action": "rename",
+            "updated": {
+              "index": 11,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleStakerPoolOwnership",
+              "astId": 1934,
+              "type": "t_mapping<t_uint256>",
+              "src": "813:71:4"
+            },
+            "original": {
+              "index": 11,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleRegistrantAmount",
+              "astId": 1934,
+              "type": "t_mapping<t_uint256>",
+              "src": "814:68:4"
+            }
+          },
+          {
+            "action": "rename",
+            "updated": {
+              "index": 12,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleStakerClaimed",
+              "astId": 1940,
+              "type": "t_mapping<t_uint256>",
+              "src": "891:65:4"
+            },
+            "original": {
+              "index": 12,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleRegistrantClaimed",
+              "astId": 1940,
+              "type": "t_mapping<t_uint256>",
+              "src": "889:69:4"
+            }
+          },
+          {
+            "action": "rename",
+            "updated": {
+              "index": 13,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cyclePoolTotal",
+              "astId": 1944,
+              "type": "t_mapping<t_uint256>",
+              "src": "963:43:4"
+            },
+            "original": {
+              "index": 13,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleTotalRegistered",
+              "astId": 1944,
+              "type": "t_mapping<t_uint256>",
+              "src": "965:49:4"
+            }
+          },
+          {
+            "action": "rename",
+            "updated": {
+              "index": 16,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleTotalReward",
+              "astId": 1952,
+              "type": "t_mapping<t_uint256>",
+              "src": "1099:45:4"
+            },
+            "original": {
+              "index": 16,
+              "contract": "AskoStakingRewardPool",
+              "path": "..\\..\\D\\ASKO\\askonetwork-contracts\\contracts\\AskoStakingRewardPool.sol",
+              "label": "cycleTotalReservations",
+              "astId": 1952,
+              "type": "t_mapping<t_uint256>",
+              "src": "1107:51:4"
             }
           }
         ]
@@ -1582,6 +1696,15 @@
         "address": "0x736eAA654057506670994CA4b89b9848a7e7A061",
         "version": "1.0.0",
         "implementation": "0x8Dd4B9c337fAfB5aE3DC52c3be95C9a96eE62567",
+        "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
+        "kind": "Upgradeable"
+      }
+    ],
+    "askonetwork-contracts/AskoStakingRewardPool": [
+      {
+        "address": "0xc6e38D2fAaE7C71F84DB1703886383939f9a7c87",
+        "version": "1.0.0",
+        "implementation": "0xB535FB5b41D0d451E38Eac92e7a6D0cE2c7A8200",
         "admin": "0x6b08825E47d22c6685efE6430819888f8159ffD8",
         "kind": "Upgradeable"
       }

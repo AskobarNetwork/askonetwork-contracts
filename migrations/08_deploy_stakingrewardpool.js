@@ -4,6 +4,7 @@ const {publicKey} = require("../privatekey")
 
 async function deploy(options) {
   add({ contractsData: [{ name: 'AskoStakingRewardPool', alias: 'AskoStakingRewardPool' }] });
+  options.force = true
   await push(options);
   await create(Object.assign({ contractAlias: 'AskoStakingRewardPool' }, options));
 }
