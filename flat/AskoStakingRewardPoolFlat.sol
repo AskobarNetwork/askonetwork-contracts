@@ -1,7 +1,4 @@
-
-// File: @openzeppelin\contracts-ethereum-package\contracts\math\SafeMath.sol
-
-pragma solidity ^0.5.0;
+pragma solidity 0.5.16;
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
@@ -158,10 +155,6 @@ library SafeMath {
     }
 }
 
-// File: @openzeppelin\upgrades\contracts\Initializable.sol
-
-pragma solidity >=0.4.24 <0.7.0;
-
 
 /**
  * @title Initializable
@@ -223,10 +216,6 @@ contract Initializable {
   uint256[50] private ______gap;
 }
 
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\GSN\Context.sol
-
-pragma solidity ^0.5.0;
-
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -253,11 +242,6 @@ contract Context is Initializable {
         return msg.data;
     }
 }
-
-// File: @openzeppelin\contracts-ethereum-package\contracts\ownership\Ownable.sol
-
-pragma solidity ^0.5.0;
-
 
 
 /**
@@ -336,9 +320,6 @@ contract Ownable is Initializable, Context {
     uint256[50] private ______gap;
 }
 
-// File: @openzeppelin\contracts-ethereum-package\contracts\token\ERC20\IERC20.sol
-
-pragma solidity ^0.5.0;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
@@ -415,10 +396,6 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-// File: contracts\library\BasisPoints.sol
-
-pragma solidity 0.5.16;
-
 
 library BasisPoints {
     using SafeMath for uint;
@@ -443,19 +420,11 @@ library BasisPoints {
     }
 }
 
-// File: contracts\interfaces\IStakeHandler.sol
-
-pragma solidity 0.5.16;
-
 
 interface IStakeHandler {
     function handleStake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external;
     function handleUnstake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external;
 }
-
-// File: contracts\AskoStaking.sol
-
-pragma solidity 0.5.16;
 
 
 contract AskoStaking is Initializable, Ownable {
@@ -641,10 +610,6 @@ contract AskoStaking is Initializable, Ownable {
 
 }
 
-// File: contracts\AskoStakingRewardPool.sol
-
-pragma solidity 0.5.16;
-
 
 contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     using BasisPoints for uint;
@@ -652,20 +617,21 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
 
     uint public releaseBP;
     uint public releaseInterval;
-    uint public releaseStart;
+    uint public cycleStart;
     IERC20 private askoToken;
     AskoStaking private askoStaking;
 
-    bool isRegistrationEnabled;
-
-    mapping(address => bool) public registeredStakers;
-    mapping(uint => mapping(address=>uint)) public cycleRegistrantAmount;
-    mapping(uint => mapping(address=>uint)) public cycleRegistrantClaimed;
-    mapping(uint => uint) public cycleTotalRegistered;
+    mapping(address => bool) public isStakerRegistered;
+    mapping(uint => mapping(address=>uint)) public cycleStakerPoolOwnership;
+    mapping(uint => mapping(address=>uint)) public cycleStakerClaimed;
+    mapping(uint => uint) public cyclePoolTotal;
 
     uint public reservedForClaims;
     uint public lastCycleSetReservedForClaims;
-    mapping(uint => uint) public cycleTotalReservations;
+    mapping(uint => uint) public cycleTotalReward;
+
+    event OnClaim(address sender, uint payout);
+    event OnRegister(address sender);
 
     modifier onlyFromAskoStaking {
         require(msg.sender == address(askoStaking), "Sender must be AskoStaking sc.");
@@ -673,34 +639,29 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     }
 
     modifier onlyAfterStart {
-        require(releaseStart != 0 && now > releaseStart, "Has not yet started.");
+        require(cycleStart != 0 && now > cycleStart, "Has not yet started.");
         _;
     }
 
-    function handleStake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external onlyFromAskoStaking {
-        if (!registeredStakers[staker]) return;
-        uint nextCycle = getCurrentCycleCount().add(1);
-        cycleRegistrantAmount[nextCycle][staker] = stakerFinalValue;
-        cycleTotalRegistered[nextCycle] = cycleTotalRegistered[nextCycle] + stakerDeltaValue;
+    function handleStake(address staker, uint stakerDeltaValue, uint stakeValue) external onlyFromAskoStaking {
+        if (!isStakerRegistered[staker]) return;
+        uint currentCycle = getCurrentCycleCount();
+        _updateReservedForClaims(currentCycle);
+        _updateStakerPoolOwnershipNextCycle(currentCycle, staker, stakeValue);
     }
 
-    function handleUnstake(address staker, uint stakerDeltaValue, uint stakerFinalValue) external onlyFromAskoStaking {
-        if (!registeredStakers[staker]) return;
+    function handleUnstake(address staker, uint stakerDeltaValue, uint stakeValue) external onlyFromAskoStaking {
+        if (!isStakerRegistered[staker]) return;
         uint currentCycle = getCurrentCycleCount();
-        uint nextCycle = currentCycle.add(1);
-        uint currentCycleRegistrantAmount = cycleRegistrantAmount[currentCycle][staker];
-        if (currentCycleRegistrantAmount > stakerFinalValue) {
-            uint delta = currentCycleRegistrantAmount.sub(stakerFinalValue);
-            cycleRegistrantAmount[currentCycle][staker] = stakerFinalValue;
-            cycleTotalRegistered[currentCycle] = cycleTotalRegistered[currentCycle] - delta;
-        }
-        cycleRegistrantAmount[nextCycle][staker] = stakerFinalValue;
-        cycleTotalRegistered[nextCycle] = cycleTotalRegistered[nextCycle] - stakerDeltaValue;
+        _updateReservedForClaims(currentCycle);
+        _updateStakerPoolOwnershipNextCycle(currentCycle, staker, stakeValue);
+        _updateStakerPoolOwnershipCurrentCycle(currentCycle, staker, stakeValue);
     }
 
     function initialize(
         uint _releaseBP,
         uint _releaseInterval,
+        uint _cycleStart,
         address _owner,
         IERC20 _askoToken,
         AskoStaking _askoStaking
@@ -709,6 +670,7 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
 
         releaseBP = _releaseBP;
         releaseInterval = _releaseInterval;
+        cycleStart = _cycleStart;
         askoToken = _askoToken;
         askoStaking = _askoStaking;
 
@@ -717,71 +679,88 @@ contract AskoStakingRewardPool is Initializable, IStakeHandler, Ownable {
     }
 
     function register() public {
-        require(isRegistrationEnabled, "Registration not enabled");
-        setReservedForClaims();
-        uint amount = askoStaking.stakeValue(msg.sender);
+        isStakerRegistered[msg.sender] = true;
+
         uint currentCycle = getCurrentCycleCount();
-        require(amount > 1 ether, "Must have staked at least 1 ASKO to register.");
-        cycleRegistrantAmount[currentCycle.add(1)][msg.sender] = amount;
-        cycleTotalRegistered[currentCycle.add(1)] = cycleTotalRegistered[currentCycle.add(1)].add(amount);
-        registeredStakers[msg.sender] = true;
+
+        _updateReservedForClaims(currentCycle);
+        _updateStakerPoolOwnershipNextCycle(currentCycle, msg.sender, askoStaking.stakeValue(msg.sender));
+
+        emit OnRegister(msg.sender);
     }
 
-    function claim(uint cycle) public onlyAfterStart {
-        setReservedForClaims();
+    function claim(uint requestCycle) public onlyAfterStart {
         uint currentCycle = getCurrentCycleCount();
-        require(registeredStakers[msg.sender], "Must register to be eligble for rewards.");
-        require(cycle > 0, "Cannot claim for tokens staked before first cycle starts.");
-        require(currentCycle > 1, "Cannot claim until first cycle completes.");
-        require(currentCycle > cycle, "Can only claim for previous cycles.");
-        require(cycleRegistrantAmount[cycle][msg.sender] > 0, "Must have registered stake for cycle.");
-        require(cycleRegistrantClaimed[cycle][msg.sender] == 0, "Must not have claimed for cycle.");
-        uint payout = calculatePayout(msg.sender, cycle);
-        cycleRegistrantClaimed[cycle][msg.sender] = 0;
-        reservedForClaims = reservedForClaims.sub(payout);
+        uint payout = calculatePayout(msg.sender, currentCycle);
+
+        _updateReservedForClaims(currentCycle);
+        _updateStakerPoolOwnershipNextCycle(currentCycle, msg.sender, askoStaking.stakeValue(msg.sender));
+        _updateClaimReservations(currentCycle, requestCycle, payout, msg.sender);
+
         askoToken.transfer(msg.sender, payout);
+
+        emit OnClaim(msg.sender, payout);
     }
 
     function setReleaseBP(uint _releaseBP) public onlyOwner {
         releaseBP = _releaseBP;
     }
 
-    function setStartTime(uint _releaseStart) public onlyOwner {
-        releaseStart = _releaseStart;
-    }
-
-    function setIsRegistrationEnabled(bool val) public onlyOwner {
-        isRegistrationEnabled = val;
+    function setStartTime(uint _cycleStart) public onlyOwner {
+        cycleStart = _cycleStart;
     }
 
     function calculatePayout(address staker, uint cycle) public view returns (uint) {
-        if (!registeredStakers[staker]) return 0;
-        if (cycleRegistrantClaimed[cycle][msg.sender] != 0) return 0;
-        uint cyclePayout = cycleTotalReservations[cycle];
-        uint cycleTotal  = cycleTotalRegistered[cycle];
-        if (cycleTotal == 0) return 0;
-        return cyclePayout.mul(cycleRegistrantAmount[cycle][staker]).div(cycleTotal);
-    }
+        if (!isStakerRegistered[staker]) return 0;
+        if (cycleStakerClaimed[cycle][staker] != 0) return 0;
+        if (cycleTotalReward[cycle] == 0) return 0;
 
-    function getCycleRegistrantAmount(uint cycle, address registrant) public view returns (uint) {
-        return cycleRegistrantAmount[cycle][registrant];
-    }
+        uint cycleTotalPool = cyclePoolTotal[cycle];
+        uint stakerPoolOwnership = cycleStakerPoolOwnership[cycle][staker];
+        uint totalReward = cycleTotalReward[cycle];
 
-    function getCycleRegistrantClaim(uint cycle, address registrant) public view returns (uint) {
-        return cycleRegistrantClaimed[cycle][registrant];
+        if (cycleTotalPool == 0) return 0;
+        return totalReward.mul(stakerPoolOwnership).div(cycleTotalPool);
     }
 
     function getCurrentCycleCount() public view returns (uint) {
-        if (now <= releaseStart) return 0;
-        return now.sub(releaseStart).div(releaseInterval).add(1);
+        if (now <= cycleStart) return 0;
+        return now.sub(cycleStart).div(releaseInterval).add(1);
     }
 
-    function setReservedForClaims() internal {
-        uint cycle = getCurrentCycleCount();
-        if (cycle <= lastCycleSetReservedForClaims) return;
-        lastCycleSetReservedForClaims = cycle;
-        uint reservation = askoToken.balanceOf(address(this)).sub(reservedForClaims).mulBP(releaseBP);
-        reservedForClaims = reservedForClaims.add(reservation);
-        cycleTotalReservations[cycle] = reservation;
+    function _updateReservedForClaims(uint currentCycle) internal {
+        uint nextCycle = currentCycle.add(1);
+        if (nextCycle <= lastCycleSetReservedForClaims) return;
+
+        lastCycleSetReservedForClaims = nextCycle;
+
+        uint newlyReservedAsko = askoToken.balanceOf(address(this)).sub(reservedForClaims).mulBP(releaseBP);
+        reservedForClaims = reservedForClaims.add(newlyReservedAsko);
+        cycleTotalReward[nextCycle] = newlyReservedAsko;
+    }
+
+    function _updateClaimReservations(uint currentCycle, uint requestCycle, uint payout, address claimer) internal {
+        require(isStakerRegistered[claimer], "Must register to be eligble for rewards.");
+        require(requestCycle > 0, "Cannot claim for tokens staked before first cycle starts.");
+        require(currentCycle > requestCycle, "Can only claim for previous cycles.");
+        require(cycleStakerPoolOwnership[requestCycle][claimer] > 0, "Must have pool ownership for cycle.");
+        require(cycleStakerClaimed[requestCycle][claimer] == 0, "Must not have claimed for cycle.");
+        require(payout > 0, "Payout must be greater than 0.");
+        cycleStakerClaimed[requestCycle][msg.sender] = 0;
+        reservedForClaims = reservedForClaims.sub(payout);
+    }
+
+    function _updateStakerPoolOwnershipNextCycle(uint currentCycle, address staker, uint stakeValue) internal {
+        uint nextCycle = currentCycle.add(1);
+        uint currentStakerPoolOwnership = cycleStakerPoolOwnership[nextCycle][staker];
+        cyclePoolTotal[nextCycle] = cyclePoolTotal[nextCycle].sub(currentStakerPoolOwnership).add(stakeValue);
+        cycleStakerPoolOwnership[nextCycle][staker] = stakeValue;
+    }
+
+    function _updateStakerPoolOwnershipCurrentCycle(uint currentCycle, address staker, uint stakeValue) internal {
+        uint currentStakerPoolOwnership = cycleStakerPoolOwnership[currentCycle][staker];
+        if (stakeValue >= currentStakerPoolOwnership) return; //lowest balance is used
+        cyclePoolTotal[currentCycle] = cyclePoolTotal[currentCycle].sub(currentStakerPoolOwnership).add(stakeValue);
+        cycleStakerPoolOwnership[currentCycle][staker] = stakeValue;
     }
 }
