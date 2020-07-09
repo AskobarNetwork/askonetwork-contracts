@@ -245,6 +245,7 @@ describe("AskoStakingRewardPool", function() {
           "Can only claim for previous cycles."
         )
       })
+      //TODO: Add claim tests
     })
     describe("#calculatePayout", function(){
       it("Should be 0 for nonregistered", async function() {
