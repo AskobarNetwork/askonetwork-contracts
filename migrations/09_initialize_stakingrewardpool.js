@@ -19,11 +19,6 @@ async function initialize(accounts,networkName) {
   const askoStaking = await AskoStaking.deployed()
   const askoStakingRewardPool = await AskoStakingRewardPool.deployed()
 
-  await askoToken.mint(
-    askoPresale.address,
-    presaleParams.totalPresaleTokens.add(presaleParams.totalUniswapTokens)
-  )
-
   await askoStakingRewardPool.initialize(
     stakingRewardPoolParams.releaseBP,
     stakingRewardPoolParams.releaseInterval,
