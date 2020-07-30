@@ -1,7 +1,4 @@
-
-// File: @openzeppelin\contracts-ethereum-package\contracts\math\SafeMath.sol
-
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.16;
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
@@ -158,10 +155,6 @@ library SafeMath {
     }
 }
 
-// File: @openzeppelin\upgrades\contracts\Initializable.sol
-
-pragma solidity >=0.4.24 <0.7.0;
-
 
 /**
  * @title Initializable
@@ -223,10 +216,6 @@ contract Initializable {
   uint256[50] private ______gap;
 }
 
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\GSN\Context.sol
-
-pragma solidity ^0.5.0;
-
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -253,11 +242,6 @@ contract Context is Initializable {
         return msg.data;
     }
 }
-
-// File: @openzeppelin\contracts-ethereum-package\contracts\ownership\Ownable.sol
-
-pragma solidity ^0.5.0;
-
 
 
 /**
@@ -336,9 +320,6 @@ contract Ownable is Initializable, Context {
     uint256[50] private ______gap;
 }
 
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\token\ERC20\IERC20.sol
-
-pragma solidity ^0.5.0;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
@@ -414,13 +395,6 @@ interface IERC20 {
      */
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
-
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\token\ERC20\ERC20.sol
-
-pragma solidity ^0.5.0;
-
-
-
 
 
 /**
@@ -650,9 +624,6 @@ contract ERC20 is Initializable, Context, IERC20 {
     uint256[50] private ______gap;
 }
 
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\access\Roles.sol
-
-pragma solidity ^0.5.0;
 
 /**
  * @title Roles
@@ -688,12 +659,6 @@ library Roles {
         return role.bearer[account];
     }
 }
-
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\access\roles\MinterRole.sol
-
-pragma solidity ^0.5.0;
-
-
 
 
 contract MinterRole is Initializable, Context {
@@ -740,12 +705,6 @@ contract MinterRole is Initializable, Context {
     uint256[50] private ______gap;
 }
 
-// File: @openzeppelin\contracts-ethereum-package\contracts\token\ERC20\ERC20Mintable.sol
-
-pragma solidity ^0.5.0;
-
-
-
 
 /**
  * @dev Extension of {ERC20} that adds a set of accounts with the {MinterRole},
@@ -773,9 +732,6 @@ contract ERC20Mintable is Initializable, ERC20, MinterRole {
     uint256[50] private ______gap;
 }
 
-// File: contracts\uniswapV2Periphery\interfaces\IUniswapV2Router01.sol
-
-pragma solidity =0.5.16;
 
 interface IUniswapV2Router01 {
     function factory() external pure returns (address);
@@ -872,10 +828,6 @@ interface IUniswapV2Router01 {
         returns (uint[] memory amounts);
 }
 
-// File: contracts\library\BasisPoints.sol
-
-pragma solidity 0.5.16;
-
 
 library BasisPoints {
     using SafeMath for uint;
@@ -900,9 +852,6 @@ library BasisPoints {
     }
 }
 
-// File: contracts\AskoPresale.sol
-
-pragma solidity 0.5.16;
 
 contract AskoPresale is Initializable, Ownable {
     using BasisPoints for uint;

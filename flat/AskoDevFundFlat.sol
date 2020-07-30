@@ -1,7 +1,4 @@
-
-// File: @openzeppelin\upgrades\contracts\Initializable.sol
-
-pragma solidity >=0.4.24 <0.7.0;
+pragma solidity 0.5.16;
 
 
 /**
@@ -64,9 +61,6 @@ contract Initializable {
   uint256[50] private ______gap;
 }
 
-// File: @openzeppelin\contracts-ethereum-package\contracts\token\ERC20\IERC20.sol
-
-pragma solidity ^0.5.0;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP. Does not include
@@ -143,9 +137,6 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-// File: @openzeppelin\contracts-ethereum-package\contracts\math\SafeMath.sol
-
-pragma solidity ^0.5.0;
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
@@ -302,10 +293,6 @@ library SafeMath {
     }
 }
 
-// File: node_modules\@openzeppelin\contracts-ethereum-package\contracts\GSN\Context.sol
-
-pragma solidity ^0.5.0;
-
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -332,11 +319,6 @@ contract Context is Initializable {
         return msg.data;
     }
 }
-
-// File: @openzeppelin\contracts-ethereum-package\contracts\ownership\Ownable.sol
-
-pragma solidity ^0.5.0;
-
 
 
 /**
@@ -414,10 +396,6 @@ contract Ownable is Initializable, Context {
 
     uint256[50] private ______gap;
 }
-
-// File: contracts\library\BasisPoints.sol
-
-pragma solidity 0.5.16;
 
 
 library BasisPoints {
@@ -640,13 +618,6 @@ contract AskoStaking is Initializable, Ownable {
     }
 
 }
-
-// File: contracts\AskoDevfund.sol
-
-pragma solidity 0.5.16;
-
-
-pragma solidity 0.5.16;
 
 
 contract AskoDevFund is Initializable {
